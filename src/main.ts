@@ -7,7 +7,7 @@ async function main() {
         return;
     }
 
-    const gl = canvas.getContext("webgl", {xrCompatible: true});
+    const gl = canvas.getContext("webgl2", {xrCompatible: true});
     if (!gl) {
         console.error("Unable to get WebGL context");
         return;

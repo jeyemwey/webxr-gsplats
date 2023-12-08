@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 
-export const activateXR = (canvas: HTMLCanvasElement, gl: WebGLRenderingContext) => async () => {
+export const activateXR = (canvas: HTMLCanvasElement, gl: WebGL2RenderingContext) => async () => {
     if (!navigator.xr) {
         console.error("The browser does not have an XR component.");
         return;
