@@ -4,24 +4,19 @@ const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const progressDialog = document.getElementById(
   "progress-dialog",
 ) as HTMLDialogElement;
-const progressIndicator = document.getElementById(
-  "progress-indicator",
-) as HTMLProgressElement;
-
-const renderer = new SPLAT.WebGLRenderer(canvas);
-const scene = new SPLAT.Scene();
-const camera = new SPLAT.Camera();
-const controls = new SPLAT.OrbitControls(camera, canvas);
 
 async function main() {
-  const url =
-    "https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/bonsai/bonsai-7k.splat";
-  await SPLAT.Loader.LoadAsync(
-    url,
-    scene,
-    (progress) => (progressIndicator.value = progress * 100),
-    true,
-  );
+  const renderer = new SPLAT.WebGLRenderer(canvas);
+
+  const camera = new SPLAT.Camera();
+  const controls = new SPLAT.OrbitControls(camera, canvas);
+
+  // @ts-ignore
+  const largeScene = await loadScene("./bonsai-7k-raw.splat");
+  const object = await loadScene("./bonsai-7k-mini.splat");
+
+  object.translate(new SPLAT.Vector3(0, 1, 5));
+
   progressDialog.close();
 
   const handleResize = () => {
@@ -30,7 +25,7 @@ async function main() {
 
   const frame = () => {
     controls.update();
-    renderer.render(scene, camera);
+    renderer.render(object, camera);
 
     requestAnimationFrame(frame);
   };
@@ -39,6 +34,13 @@ async function main() {
   window.addEventListener("resize", handleResize);
 
   requestAnimationFrame(frame);
+}
+
+async function loadScene(url: string): Promise<SPLAT.Scene> {
+  const largeScene = new SPLAT.Scene();
+  await SPLAT.Loader.LoadAsync(url, largeScene, () => null, true);
+
+  return largeScene;
 }
 
 main();

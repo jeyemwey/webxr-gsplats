@@ -2,7 +2,26 @@
 
 This repo contains the working changes for the WebXR project.
 
-You need [NodeJS](https://nodejs.org/en) and an HTTPS forwarder like [ngrok](https://ngrok.com/docs/getting-started/) on your computer to work with this project. With those installed, run:
+You need [NodeJS](https://nodejs.org/en) and an HTTPS forwarder like [ngrok](https://ngrok.com/docs/getting-started/) on your computer to work with this project.
+
+Next, we need to link the [Gsplat.JS](https://github.com/dylanebert/gsplat.js/) library. For that, download/clone the repository somewhere:
+
+```shell
+git clone https://github.com/dylanebert/gsplat.js
+cd gsplat.js
+npm link
+npm run build
+
+# And in this project
+npm link gsplat
+```
+
+Download the splat models to the `public` folder, so you don't need to get them from the internet every time:
+
+* https://photos.volkland.de/gsplats/bonsai-7k-mini.splat
+* https://photos.volkland.de/gsplats/bonsai-7k-raw.splat
+
+With everything installed, run:
 
 ```shell
 # Fetch dependencies
