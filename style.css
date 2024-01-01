@@ -1,36 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Open+Sans:ital,wght@1,600&display=swap');
+
 body,
 html {
+    --main-radius: 2rem;
+
+
+    height: 100%;
     margin: 0;
     padding: 0;
     overflow: hidden;
     background-color: #fff;
-    font-family: sans-serif;
+    font-family: Montserrat, Arial, sans-serif;
+}
+
+body {
+    margin: 0 var(--main-radius);
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+main {
+    flex: 1;
+
+
+    display: flex;
+    gap: var(--main-radius);
+    flex-direction: row;
+    transition: all 0.2s ease;
+}
+
+main > * {
+    /*border-radius: var(--main-radius);*/
+}
+
+#comment-section {
+    background: #333333;
+    width: 40rem;
+
+    flex: 1;
+}
+
+.hide {
+    display: none;
+}
+#play-area {
+    flex: 2;
+    position: relative;
 }
 
 canvas {
-    width: 100vw;
-    height: 100vh;
+    background: black;
+    width: 100%;
+    aspect-ratio: 16/9;
 }
 
-dialog {
-    width: 100%;
-    text-align: center;
-    max-width: 20em;
-    color: white;
-    background-color: #000;
-    border: none;
-    position: relative;
-    transform: translate(-50%, -50%);
+.over-previous {
+    /*position: absolute;*/
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+footer {
+    line-height: calc(2 * var(--main-radius));
 }
 
 #progress-container {
+    text-align: center;
+    color: white;
+    background-color: #000;
+    border: none;
     position: absolute;
-    top: 50%;
-    left: 50%;
+
+    width: 100%;
 }
+
 
 progress {
     width: 100%;
+    max-width: 20rem;
     height: 1em;
     border: none;
     background-color: #fff;

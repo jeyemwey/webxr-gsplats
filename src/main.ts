@@ -1,27 +1,47 @@
-import {activateXR} from "./activateXR.ts";
+import * as SPLAT from "gsplat";
+import * as RequestAnimationFrameDispatcher from "./util/animationFrameController/RequestAnimationFrameDispatcher.ts";
+
+import {AxisProgram} from "./GSplatPrograms/AxisProgram.ts";
+import {GridProgram} from "./GSplatPrograms/GridProgram.ts";
+
+const canvas = document.getElementById("gsplat-canvas") as HTMLCanvasElement;
+const progressContainer = document.getElementById("progress-container") as HTMLDivElement;
+const progressIndicator = document.getElementById("progress-indicator") as HTMLProgressElement;
 
 async function main() {
-    const canvas = document.getElementById("canvas");
-    if (!canvas || !(canvas instanceof HTMLCanvasElement)) {
-        console.error("Unable to find canvas in document.");
-        return;
-    }
+    const renderer = new SPLAT.WebGLRenderer(canvas, []);
+    renderer.addProgram(new AxisProgram(renderer, []));
+    renderer.addProgram(new GridProgram(renderer, []));
 
-    const gl = canvas.getContext("webgl2", {xrCompatible: true});
-    if (!gl) {
-        console.error("Unable to get WebGL context");
-        return;
-    }
+    const camera = new SPLAT.Camera();
+    const controls = new SPLAT.OrbitControls(camera, canvas);
 
-    console.log("ready to play xr.");
+    // @ts-ignore
+    const scene = await loadScene("./bonsai-7k-raw.splat");
 
-    const startButton = document.getElementById("start-xr-button");
-    if (!startButton) {
-        console.error("Unable to find Start-XR-Button.");
-        return;
-    }
-    startButton.addEventListener("click", activateXR(canvas, gl));
+    progressContainer.className = "hide";
 
+    const handleResize = () => {
+        renderer.setSize(canvas.clientWidth, canvas.height);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    RequestAnimationFrameDispatcher.add(() => {
+        controls.update();
+        renderer.render(scene, camera);
+    });
+}
+
+async function loadScene(url: string): Promise<SPLAT.Scene> {
+    const scene = new SPLAT.Scene();
+    await SPLAT.Loader.LoadAsync(
+        url,
+        scene,
+        (progress) => (progressIndicator.value = progress * 100),
+        false);
+
+    return scene;
 }
 
 main();
