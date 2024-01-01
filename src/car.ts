@@ -1,9 +1,10 @@
 import * as THREE from 'three';
 import * as YUKA from 'yuka';
 
+import * as RequestAnimationFrameDispatcher from "./RequestAnimationFrameDispatcher";
+
 // @ts-ignore
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
-
 // @ts-ignore
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 // @ts-ignore
@@ -12,13 +13,18 @@ import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRend
 
 const renderer = new THREE.WebGLRenderer({alpha: true, antialias: true});
 renderer.setClearColor(0xA3A3A3, 0);
-
-
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 document.body.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
+
+// Add debugging
+const axesHelper = new THREE.AxesHelper(5);
+axesHelper.position.add(new THREE.Vector3(0,1,0));
+scene.add(axesHelper);
+const gridHelper = new THREE.GridHelper(100, 100, 0xFF0000, 0x808080);
+scene.add(gridHelper);
 
 const camera = new THREE.PerspectiveCamera(
     45,
@@ -124,25 +130,17 @@ loader.load('./SUV.glb', function (glb) {
     model.add(carLabel);
 });
 
-const lineGeometry = new THREE.BufferGeometry();
-// lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(position, 3));
-
-const lineMaterial = new THREE.LineBasicMaterial({color: 0xFFFFFF});
-const lines = new THREE.LineLoop(lineGeometry, lineMaterial);
-scene.add(lines);
-
 const time = new YUKA.Time();
 
-function animate() {
+RequestAnimationFrameDispatcher.setThreeRenderer(renderer);
+RequestAnimationFrameDispatcher.add(() => {
     const delta = time.update().getDelta();
     entityManager.update(delta);
     labelRenderer.render(scene, camera);
 
     carP.textContent = `The car`;
     renderer.render(scene, camera);
-}
-
-renderer.setAnimationLoop(animate);
+});
 
 window.addEventListener('resize', function () {
     camera.aspect = window.innerWidth / window.innerHeight;
