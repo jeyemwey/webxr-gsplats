@@ -4,12 +4,11 @@ body,
 html {
     --main-radius: 2rem;
 
-
     height: 100%;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #fff;
+    background-color: #c821ef;
     font-family: Montserrat, Arial, sans-serif;
 }
 
@@ -44,7 +43,7 @@ main > * {
     flex: 1;
 }
 
-.hide {
+.displayNone {
     display: none;
 }
 #play-area {
@@ -62,7 +61,11 @@ canvas {
     /*position: absolute;*/
     top: 0;
     left: 0;
-    pointer-events: none;
+    /*pointer-events: none;*/
+}
+
+#overlay-labelRenderer {
+    z-index: 5;
 }
 
 footer {
@@ -99,4 +102,36 @@ progress::-webkit-progress-value {
 
 progress::-moz-progress-bar {
     background-color: #eee;
+}
+
+.tooltip {
+    background: black;
+    color: white;
+
+    padding: 0.5rem 1rem;
+    position: relative;
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: all 0.2s ease;
+    transition-property: opacity, transform;
+}
+.tooltip::after {
+    position: absolute;
+    content: "";
+    width: 0.8rem;
+    height: 0.8rem;
+    background-color: black;
+    top: 90%;
+    left: 50%;
+    transform: rotateZ(45deg) translateX(-50%);
+}
+
+.hide {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.show {
+    opacity: 1;
+    transform: translateY(0px);
 }
