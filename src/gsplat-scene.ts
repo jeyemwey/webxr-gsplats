@@ -3,6 +3,7 @@ import * as RequestAnimationFrameDispatcher from "./util/animationFrameControlle
 
 import {AxisProgram} from "./GSplatPrograms/AxisProgram.ts";
 import {GridProgram} from "./GSplatPrograms/GridProgram.ts";
+import {isInDebug} from "./debugMode.ts";
 
 const canvas = document.getElementById("gsplat-canvas") as HTMLCanvasElement;
 const progressContainer = document.getElementById("progress-container") as HTMLDivElement;
@@ -10,8 +11,11 @@ const progressIndicator = document.getElementById("progress-indicator") as HTMLP
 
 export async function gsplatScene() {
     const renderer = new SPLAT.WebGLRenderer(canvas, []);
-    renderer.addProgram(new AxisProgram(renderer, []));
-    renderer.addProgram(new GridProgram(renderer, []));
+
+    if(isInDebug) {
+        renderer.addProgram(new AxisProgram(renderer, []));
+        renderer.addProgram(new GridProgram(renderer, []));
+    }
 
     const camera = new SPLAT.Camera();
     const controls = new SPLAT.OrbitControls(camera, canvas);

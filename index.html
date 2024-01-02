@@ -1,15 +1,15 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <link rel="stylesheet" href="style.css"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WebXR &times; GSplat.JS</title>
 </head>
 <body>
     <div id="container">
         <header>
-            <h1>Gaussian Splat Annotations and Viewer</h1>
+            <h1>Gaussian Splat Annotations and Viewer <a href="?debug=true" title="Toggle Debug Mode" id="toggle-debug-link">🤖</a></h1>
         </header>
 
         <main>
@@ -21,8 +21,9 @@
                     <progress max="100" id="progress-indicator"></progress>
                 </div>
                 <canvas style="z-index: 1" id="gsplat-canvas"></canvas>
+                <div id="three-container"> </div>
+                <aside id="comment-section" class="displayNone"></aside>
             </div>
-            <aside id="comment-section" class="displayNone"></aside>
         </main>
 
         <footer>Developed at TH K&ouml;ln</footer>

@@ -16,6 +16,10 @@ body {
     margin: 0 var(--main-radius);
 }
 
+h1 a {
+    text-decoration: none;
+}
+
 #container {
     display: flex;
     flex-direction: column;
@@ -62,6 +66,10 @@ canvas {
     top: 0;
     left: 0;
     /*pointer-events: none;*/
+}
+
+#three-container {
+    position: relative;
 }
 
 #overlay-labelRenderer {

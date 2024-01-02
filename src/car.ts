@@ -1,5 +1,6 @@
-import * as THREE from 'three';
-import * as YUKA from 'yuka';
+import * as THREE from "three";
+import * as YUKA from "yuka";
+import {isInDebug} from "./debugMode.ts";
 
 import * as RequestAnimationFrameDispatcher from "./util/animationFrameController/RequestAnimationFrameDispatcher.ts";
 
@@ -11,33 +12,34 @@ import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
 
 export async function car() {
-
     const renderer = new THREE.WebGLRenderer({
         alpha: true,
-        antialias: true
+        antialias: true,
     });
 
     const canvas = renderer.domElement;
     canvas.className = "over-previous";
     canvas.style.zIndex = "3";
-    document.getElementById("play-area")!.appendChild(canvas);
+    document.getElementById("three-container")!.appendChild(canvas);
 
-    renderer.setClearColor(0xA3A3A3, 0.1);
+    renderer.setClearColor(0xa3a3a3, 0.1);
     renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 
     const scene = new THREE.Scene();
 
-    const axesHelper = new THREE.AxesHelper(5);
-    axesHelper.position.add(new THREE.Vector3(0, 1, 0));
-    scene.add(axesHelper);
-    const gridHelper = new THREE.GridHelper(100, 100, 0xFF0000, 0x808080);
-    scene.add(gridHelper);
+    if(isInDebug) {
+        const axesHelper = new THREE.AxesHelper(5);
+        axesHelper.position.add(new THREE.Vector3(0, 1, 0));
+        scene.add(axesHelper);
+        const gridHelper = new THREE.GridHelper(100, 100, 0xff0000, 0x808080);
+        scene.add(gridHelper);
+    }
 
     const camera = new THREE.PerspectiveCamera(
         45,
         canvas.clientWidth / canvas.clientHeight,
         0.1,
-        1000
+        1000,
     );
 
     camera.position.set(0, 10, 15);
@@ -52,9 +54,9 @@ export async function car() {
     labelRenderer.domElement.style.top = "0";
     labelRenderer.domElement.style.pointerEvents = "none";
     labelRenderer.domElement.id = "overlay-labelRenderer";
-    document.getElementById("play-area")!.append(labelRenderer.domElement);
+    document.getElementById("three-container")!.append(labelRenderer.domElement);
 
-    const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.position.set(0, 10, 10);
     scene.add(directionalLight);
 
@@ -68,7 +70,7 @@ export async function car() {
     // @ts-ignore
     function createCpointMesh(name, x, y, z) {
         const geo = new THREE.SphereGeometry(0.1);
-        const mat = new THREE.MeshBasicMaterial({color: 0xFF0000});
+        const mat = new THREE.MeshBasicMaterial({color: 0xff0000});
         const mesh = new THREE.Mesh(geo, mat);
         mesh.position.set(x, y, z);
         mesh.name = name;
@@ -117,7 +119,7 @@ export async function car() {
 
     const loader = new GLTFLoader();
     // @ts-ignore
-    loader.load('./SUV.glb', function (glb) {
+    loader.load("./SUV.glb", function (glb) {
         const model = glb.scene;
         scene.add(model);
         model.matrixAutoUpdate = false;
@@ -141,8 +143,8 @@ export async function car() {
         renderer.render(scene, camera);
     });
 
-    window.addEventListener('resize', function () {
-        camera.aspect = canvas.clientWidth/canvas.clientHeight;
+    window.addEventListener("resize", function () {
+        camera.aspect = canvas.clientWidth / canvas.clientHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(canvas.clientWidth, canvas.clientHeight);
         labelRenderer.setSize(canvas.clientWidth, canvas.clientHeight);
