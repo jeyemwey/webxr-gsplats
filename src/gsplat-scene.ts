@@ -1,5 +1,6 @@
 import * as SPLAT from "gsplat";
 import * as RequestAnimationFrameDispatcher from "./util/animationFrameController/RequestAnimationFrameDispatcher.ts";
+import * as CameraOrientationStateDistributor from "./util/CameraOrientationStateDistributor/CameraOrientationStateDistributor.ts";
 
 import {AxisProgram} from "./GSplatPrograms/AxisProgram.ts";
 import {GridProgram} from "./GSplatPrograms/GridProgram.ts";
@@ -33,6 +34,8 @@ export async function gsplatScene() {
 
     RequestAnimationFrameDispatcher.add(() => {
         controls.update();
+        CameraOrientationStateDistributor.dispatch(camera);
+
         renderer.render(scene, camera);
     });
 }
