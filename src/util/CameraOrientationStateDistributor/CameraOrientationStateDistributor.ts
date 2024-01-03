@@ -1,5 +1,6 @@
 type CameraState = {
-    position: { x: Number, y: Number, z: Number };
+    position: { x: number, y: number, z: number };
+    rotationQuaternion: number[]; // xyzw
 };
 
 type CameraStateEventListener = (newState: CameraState) => void;

@@ -34,7 +34,10 @@ export async function gsplatScene() {
 
     RequestAnimationFrameDispatcher.add(() => {
         controls.update();
-        CameraOrientationStateDistributor.dispatch(camera);
+        CameraOrientationStateDistributor.dispatch({
+            position: camera.position,
+            rotationQuaternion: camera.rotation.flat()
+        });
 
         renderer.render(scene, camera);
     });

@@ -2,6 +2,8 @@ import * as THREE from "three";
 import * as YUKA from "yuka";
 import {isInDebug} from "./debugMode.ts";
 
+import * as CameraOrientationStateDistributor
+    from "./util/CameraOrientationStateDistributor/CameraOrientationStateDistributor.ts";
 import * as RequestAnimationFrameDispatcher from "./util/animationFrameController/RequestAnimationFrameDispatcher.ts";
 
 // @ts-ignore
@@ -10,6 +12,7 @@ import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 // @ts-ignore
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
+import {Quaternion} from "three";
 
 export async function car() {
     const renderer = new THREE.WebGLRenderer({
@@ -27,7 +30,7 @@ export async function car() {
 
     const scene = new THREE.Scene();
 
-    if(isInDebug) {
+    if (isInDebug) {
         const axesHelper = new THREE.AxesHelper(5);
         axesHelper.position.add(new THREE.Vector3(0, 1, 0));
         scene.add(axesHelper);
@@ -42,8 +45,25 @@ export async function car() {
         1000,
     );
 
-    camera.position.set(0, 10, 15);
-    camera.lookAt(scene.position);
+    window.postQuad = () =>{
+        const q = new Quaternion();
+        q.setFromEuler(camera.rotation);
+        console.log(q);
+    };
+
+    // camera.position.set(0, 10, 15);
+    // camera.lookAt(scene.position);
+    CameraOrientationStateDistributor.addEventListener((newState) => {
+        camera.position.set(
+            -1 * newState.position.x,
+            -1 * newState.position.y,
+            newState.position.z);
+
+        // {
+        //     const [x, y, z, w] = newState.rotationQuaternion;
+        //     camera.rotation.setFromQuaternion(new Quaternion(x, -y, z, w));
+        // }
+    });
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.update();

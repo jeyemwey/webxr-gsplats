@@ -1,5 +1,5 @@
 import * as CameraOrientationStateDistributor from "./CameraOrientationStateDistributor.ts";
-import {isInDebug} from "./debugMode.ts";
+import {isInDebug} from "../../debugMode.ts";
 
 export const initPositionDisplay = () => {
     if (!isInDebug) {
@@ -14,12 +14,12 @@ export const initPositionDisplay = () => {
 
     let positionUpdateCount = 0;
     CameraOrientationStateDistributor.addEventListener((state) => {
-        if (positionUpdateCount % 30 == 0) {
+        if (positionUpdateCount % 1000 == 0) {
             debugPosX.textContent = state.position.x.toFixed(3);
             debugPosY.textContent = state.position.y.toFixed(3);
             debugPosZ.textContent = state.position.z.toFixed(3);
 
-            console.log(state.position);
+            console.table(state);
         }
         positionUpdateCount++;
     });
