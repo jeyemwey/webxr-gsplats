@@ -45,6 +45,7 @@ export async function car() {
         1000,
     );
 
+    // @ts-ignore
     window.postQuad = () =>{
         const q = new Quaternion();
         q.setFromEuler(camera.rotation);

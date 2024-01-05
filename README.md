@@ -2,6 +2,8 @@
 
 This repo contains the working changes for the WebXR project.
 
+[🚀 Live version of current main branch 🚀](https://jeyemwey.github.io/webxr-gsplats/)
+
 You need [NodeJS](https://nodejs.org/en) and an HTTPS forwarder like [ngrok](https://ngrok.com/docs/getting-started/) on your computer to work with this project.
 
 Next, we need to link the [Gsplat.JS](https://github.com/dylanebert/gsplat.js/) library. For that, download/clone the repository somewhere:

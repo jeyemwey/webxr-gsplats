@@ -15,8 +15,6 @@ async function main() {
   const largeScene = await loadScene("./bonsai-7k-raw.splat");
   const object = await loadScene("./bonsai-7k-mini.splat");
 
-  object.translate(new SPLAT.Vector3(0, 1, 5));
-
   progressDialog.close();
 
   const handleResize = () => {
