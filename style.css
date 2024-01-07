@@ -39,13 +39,6 @@ main > * {
     /*border-radius: var(--main-radius);*/
 }
 
-#comment-section {
-    background: #333333;
-    width: 40rem;
-
-    flex: 1;
-}
-
 .displayNone {
     display: none;
 }
