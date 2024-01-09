@@ -4,7 +4,7 @@ aside#comment-section {
     display: flex;
     flex-direction: column;
 
-    header, form, section {
+    form, section {
         background: white;
     }
 
@@ -72,6 +72,30 @@ aside#comment-section {
         }
     }
 
+    header {
+        display: flex;
+        background: #f0f0f0;
+
+        div {
+            flex: 1;
+            padding: 0.5em 1em;
+
+            p {
+                font-size: 0.8em;
+            }
+        }
+
+        button {
+            background: transparent;
+            font-size: 3em;
+            border: 0;
+            padding: 0 1rem;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
 }
 
 

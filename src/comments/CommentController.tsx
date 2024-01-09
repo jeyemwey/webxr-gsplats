@@ -72,10 +72,17 @@ export const CommentController = () => {
         console.log(comment);
     }
 
+    const hideCommentController = () => {
+        setActiveAnnotationId(0);
+    }
+
     return (<>
         <header>
-            <h2>{active.title}</h2>
-            <p>Erstellt am: <DateFormat d={active.created_at}/></p>
+            <div>
+                <h2>{active.title}</h2>
+                <p>Erstellt am: <DateFormat d={active.created_at}/></p>
+            </div>
+            <button onClick={hideCommentController}>&times;</button>
         </header>
         <section>
             <ul>{active.comments.map(comment => <Bubble comment={comment}/>)}</ul>
