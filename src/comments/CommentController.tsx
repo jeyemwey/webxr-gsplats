@@ -27,7 +27,7 @@ const allAnnotations: Annotation[] = [
         comments: [
             {
                 id: 1,
-                author: "Jannik Volkland",
+                author: getRandomAuthor(),
                 text: "An dieser Stelle wurde Reifenabrieb von Michellin 20/7/38-Reifen gefunden.",
                 created_at: new Date(2023, 11, 12, 13, 56)
             },
@@ -40,7 +40,7 @@ const allAnnotations: Annotation[] = [
             {
                 id: 2,
                 author: "Jannik Volkland",
-                text: "Danke für den Zusammenschluss, ich fahre da mal hin.",
+                text: "Danke für die Brücke, ich fahre da mal hin.",
                 created_at: (() => {
                     const d = new Date();
                     d.setHours(23, 14, 0, 0);

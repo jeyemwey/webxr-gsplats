@@ -118,9 +118,15 @@ export async function car() {
 
     const mousePos = new THREE.Vector2();
     const raycaster = new THREE.Raycaster();
-    window.addEventListener("mousemove", function (e) {
-        mousePos.x = (e.clientX / this.window.innerWidth) * 2 - 1;
-        mousePos.y = -(e.clientY / this.window.innerHeight) * 2 + 1;
+    canvas.addEventListener("mousemove", function (event) {
+        var rect = canvas.getBoundingClientRect();
+        var mouseX = event.clientX - rect.left;
+        var mouseY = event.clientY - rect.top;
+
+        // Calculate the transformed values in the range [-1, 1]
+        mousePos.x = (mouseX / canvas.width) * 2 - 1;
+        mousePos.y = -(mouseY / canvas.height) * 2 + 1;
+
         raycaster.setFromCamera(mousePos, camera);
         const intersects = raycaster.intersectObject(group);
         if (intersects.length > 0) {
@@ -128,6 +134,11 @@ export async function car() {
             p.textContent = intersects[0].object.name;
             const {x, y, z} = intersects[0].object.position;
             cPointLabel.position.set(x, y + 1, z);
+
+            if (intersects[0].object.name === "sphereMesh8") {
+                // @ts-ignore
+                window.setActiveAnnotationId(1);
+            }
         } else {
             p.className = "tooltip hide";
         }
