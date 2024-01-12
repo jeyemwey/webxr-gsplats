@@ -32,7 +32,8 @@ export async function car() {
 
     if (isInDebug) {
         const axesHelper = new THREE.AxesHelper(5);
-        axesHelper.position.add(new THREE.Vector3(0, 1, 0));
+        axesHelper.position.add(new THREE.Vector3(0, 0.2, 0));
+
         scene.add(axesHelper);
         const gridHelper = new THREE.GridHelper(100, 100, 0xff0000, 0x808080);
         scene.add(gridHelper);
@@ -52,22 +53,22 @@ export async function car() {
         console.log(q);
     };
 
-    // camera.position.set(0, 10, 15);
-    // camera.lookAt(scene.position);
+    camera.lookAt(scene.position);
     CameraOrientationStateDistributor.addEventListener((newState) => {
         camera.position.set(
             -1 * newState.position.x,
             -1 * newState.position.y,
             newState.position.z);
+        camera.lookAt(scene.position);
 
         // {
         //     const [x, y, z, w] = newState.rotationQuaternion;
-        //     camera.rotation.setFromQuaternion(new Quaternion(x, -y, z, w));
+        //     camera.rotation.setFromQuaternion(new Quaternion(x, y, z, w));
         // }
     });
 
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.update();
+    // const controls = new OrbitControls(camera, renderer.domElement);
+    // controls.update();
 
     const labelRenderer = new CSS2DRenderer();
     labelRenderer.setSize(canvas.clientWidth, canvas.clientHeight);

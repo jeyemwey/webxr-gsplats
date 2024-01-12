@@ -32,12 +32,17 @@ export async function gsplatScene() {
     handleResize();
     window.addEventListener("resize", handleResize);
 
-    RequestAnimationFrameDispatcher.add(() => {
-        controls.update();
+    function dispatchCameraOrientationState() {
         CameraOrientationStateDistributor.dispatch({
             position: camera.position,
             rotationQuaternion: camera.rotation.flat()
         });
+    }
+    dispatchCameraOrientationState();
+
+    RequestAnimationFrameDispatcher.add(() => {
+        controls.update();
+        dispatchCameraOrientationState();
 
         renderer.render(scene, camera);
     });
