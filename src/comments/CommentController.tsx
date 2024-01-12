@@ -22,28 +22,28 @@ type Annotation = {
 const allAnnotations: Annotation[] = [
     {
         id: 1,
-        title: "Reifenabrieb",
+        title: "Textilfasern",
         created_at: new Date(2023, 11, 12, 13, 56),
         comments: [
             {
                 id: 1,
                 author: getRandomAuthor(),
-                text: "An dieser Stelle wurde Reifenabrieb von Michellin 20/7/38-Reifen gefunden.",
+                text: "Es wurden violette Textilfasern an der Leiche gefunden, die könnten auf diese Tischdecke passen.",
                 created_at: new Date(2023, 11, 12, 13, 56)
             },
             {
                 id: 2,
-                author: getRandomAuthor(),
-                text: "Das Zugfahrzeug vom Würstchen-Stand hat diese Reifen!",
+                author: "Abby Sciuto",
+                text: "Ich habe die beiden Faser-Proben untersucht und sie passen zueinander 🎉",
                 created_at: new Date(2023, 11, 14, 18, 3)
             },
             {
                 id: 2,
                 author: "Jannik Volkland",
-                text: "Danke für die Brücke, ich fahre da mal hin.",
+                text: "Danke für die Untersuchung 💐",
                 created_at: (() => {
                     const d = new Date();
-                    d.setHours(23, 14, 0, 0);
+                    d.setHours(10, 14, 0, 0);
                     return d;
                 })()
             }

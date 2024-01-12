@@ -96,6 +96,10 @@ aside#comment-section {
             }
         }
     }
+
+    section {
+        width: 30em;
+    }
 }
 
 

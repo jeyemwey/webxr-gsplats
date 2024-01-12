@@ -47,7 +47,7 @@ export async function car() {
     );
 
     // @ts-ignore
-    window.postQuad = () =>{
+    window.postQuad = () => {
         const q = new Quaternion();
         q.setFromEuler(camera.rotation);
         console.log(q);
@@ -78,16 +78,25 @@ export async function car() {
     labelRenderer.domElement.id = "overlay-labelRenderer";
     document.getElementById("three-container")!.append(labelRenderer.domElement);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(0, 10, 10);
-    scene.add(directionalLight);
+    {
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(0, 1, 3);
+        scene.add(directionalLight);
+    }
 
-    const vehicle = new YUKA.Vehicle();
+    {
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
+        directionalLight.position.set(-3, -1, -3);
+        scene.add(directionalLight);
+    }
+
+    const sunflower = new YUKA.Vehicle();
     // @ts-ignore
-    vehicle.position.set(0, 0, 0);
+    sunflower.position.set(0, 0, 0);
+
 
     const entityManager = new YUKA.EntityManager();
-    entityManager.add(vehicle);
+    entityManager.add(sunflower);
 
     // @ts-ignore
     function createCpointMesh(name, x, y, z) {
@@ -96,19 +105,40 @@ export async function car() {
         const mesh = new THREE.Mesh(geo, mat);
         mesh.position.set(x, y, z);
         mesh.name = name;
+
+        // mesh.add(bonsaiLabel);
         return mesh;
     }
 
     const group = new THREE.Group();
-    group.add(createCpointMesh("sphereMesh1", -6, 0, 4));
-    group.add(createCpointMesh("sphereMesh2", -12, 0, 0));
-    group.add(createCpointMesh("sphereMesh3", -6, 0, -12));
-    group.add(createCpointMesh("sphereMesh4", 0, 0, 0));
-    group.add(createCpointMesh("sphereMesh5", 8, 0, -8));
-    group.add(createCpointMesh("sphereMesh6", 10, 0, 0));
-    group.add(createCpointMesh("sphereMesh7", 4, 0, 4));
-    group.add(createCpointMesh("sphereMesh8", 0, 0, 6));
+    // group.add(createCpointMesh("sphereMesh1", -6, 0, 4));
+    // group.add(createCpointMesh("sphereMesh2", -12, 0, 0));
+    // group.add(createCpointMesh("sphereMesh3", -6, 0, -12));
+    // group.add(createCpointMesh("sphereMesh4", 0, 0, 0));
+    // group.add(createCpointMesh("sphereMesh5", 8, 0, -8));
+    // group.add(createCpointMesh("sphereMesh6", 10, 0, 0));
+    // group.add(createCpointMesh("sphereMesh7", 4, 0, 4));
+    group.add(createCpointMesh("sphereMesh8", 0.7, -0.3, 0.6));
+    group.add(createCpointMesh("fahrrad", -5, -3, 2));
     scene.add(group);
+
+    {
+        const textilfasernP = document.createElement("p");
+        textilfasernP.className = "tooltip show";
+        textilfasernP.textContent = "Textilfasern";
+        const textilfasernLabel = new CSS2DObject(textilfasernP);
+        textilfasernLabel.position.set(0.7, 0.1, 0.6);
+        scene.add(textilfasernLabel);
+    }
+
+    {
+        const textilfasernP = document.createElement("p");
+        textilfasernP.className = "tooltip show";
+        textilfasernP.textContent = "Fahrrad auf Videoüberwachung";
+        const textilfasernLabel = new CSS2DObject(textilfasernP);
+        textilfasernLabel.position.set(-5, -2.3, 2);
+        scene.add(textilfasernLabel);
+    }
 
     const p = document.createElement("p");
     p.className = "tooltip";
@@ -131,10 +161,10 @@ export async function car() {
         raycaster.setFromCamera(mousePos, camera);
         const intersects = raycaster.intersectObject(group);
         if (intersects.length > 0) {
-            p.className = "tooltip show";
+            // p.className = "tooltip show";
             p.textContent = intersects[0].object.name;
             const {x, y, z} = intersects[0].object.position;
-            cPointLabel.position.set(x, y + 1, z);
+            cPointLabel.position.set(x, y + 0.2, z);
 
             if (intersects[0].object.name === "sphereMesh8") {
                 // @ts-ignore
@@ -145,23 +175,27 @@ export async function car() {
         }
     });
 
-    const carP = document.createElement("p");
-    carP.className = "tooltip show";
-    const carLabel = new CSS2DObject(carP);
-    carLabel.position.set(0, 4, 0);
+    const bonsaiP = document.createElement("p");
+    bonsaiP.className = "tooltip show";
+    const bonsaiLabel = new CSS2DObject(bonsaiP);
+    bonsaiLabel.position.set(0, 0.75, 0);
+
 
     const loader = new GLTFLoader();
     // @ts-ignore
-    loader.load("./SUV.glb", function (glb) {
+    loader.load("./sunflower.gltf", function (glb) {
         const model = glb.scene;
         scene.add(model);
         model.matrixAutoUpdate = false;
-        vehicle.scale = new YUKA.Vector3(0.5, 0.5, 0.5);
-        vehicle.setRenderComponent(model, function (entity, renderComponent) {
+        // vehicle.rotation.y = Math.PI / 2;
+        sunflower.scale = new YUKA.Vector3(2, 2,2);
+        sunflower.rotateTo(new YUKA.Vector3(-1, 0, 0),  Math.PI);
+
+        sunflower.setRenderComponent(model, function (entity, renderComponent) {
             renderComponent.matrix.copy(entity.worldMatrix);
         });
 
-        model.add(carLabel);
+        model.add(bonsaiLabel);
     });
 
     const time = new YUKA.Time();
@@ -172,7 +206,7 @@ export async function car() {
         entityManager.update(delta);
         labelRenderer.render(scene, camera);
 
-        carP.textContent = `The car`;
+        bonsaiP.textContent = `Bonsai`;
         renderer.render(scene, camera);
     });
 

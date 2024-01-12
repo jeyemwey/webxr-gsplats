@@ -112,7 +112,7 @@ progress::-moz-progress-bar {
     position: relative;
     transform: translateY(-10px);
     opacity: 0;
-    transition: all 0.2s ease;
+    /*transition: all 0.05s ease;*/
     transition-property: opacity, transform;
 }
 .tooltip::after {
