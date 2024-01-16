@@ -1,4 +1,4 @@
-import {useState} from "preact/hooks";
+import {useEffect, useState} from "preact/hooks";
 import {DateFormat} from "./DateFormat.tsx";
 import {Bubble} from "./Bubble.tsx";
 import {NewCommentForm} from "./NewCommentForm.tsx";
@@ -60,6 +60,16 @@ export const CommentController = () => {
     window.setActiveAnnotationId = setActiveAnnotationId;
 
     const active = allAnnotations.find(a => a.id === activeAnnotationId);
+
+    useEffect(() => {
+        const mainNode = document.getElementById("main-node")!;
+
+        if (active) {
+            mainNode.className = "has-open-comment-section";
+        } else {
+            mainNode.className = "has-closed-comment-section";
+        }
+    }, [activeAnnotationId]);
 
     if (!active) {
         return <></>;

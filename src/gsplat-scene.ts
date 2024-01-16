@@ -26,6 +26,14 @@ export async function gsplatScene() {
 
     progressContainer.className = "displayNone";
 
+    const resizeObserver = new ResizeObserver(entries => {
+        console.log(entries[0].contentRect);
+        entries.forEach(entry => {
+            renderer.setSize(entry.contentRect.width, entry.contentRect.width * 9 / 16);
+        });
+    });
+    resizeObserver.observe(document.getElementById("play-area")!);
+
     const handleResize = () => {
         renderer.setSize(canvas.clientWidth, canvas.clientHeight);
     };

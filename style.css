@@ -28,9 +28,7 @@ h1 a {
 main {
     flex: 1;
 
-
     display: flex;
-    gap: var(--main-radius);
     flex-direction: row;
     transition: all 0.2s ease;
 }
@@ -115,6 +113,12 @@ progress::-moz-progress-bar {
     /*transition: all 0.05s ease;*/
     transition-property: opacity, transform;
 }
+
+main.has-open-comment-section .tooltip {
+    font-size: 0.7em;
+    padding: 0.35rem 0.7rem;
+}
+
 .tooltip::after {
     position: absolute;
     content: "";

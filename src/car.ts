@@ -26,7 +26,7 @@ export async function car() {
     document.getElementById("three-container")!.appendChild(canvas);
 
     renderer.setClearColor(0xa3a3a3, 0.1);
-    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
 
     const scene = new THREE.Scene();
 
@@ -77,6 +77,15 @@ export async function car() {
     labelRenderer.domElement.style.pointerEvents = "none";
     labelRenderer.domElement.id = "overlay-labelRenderer";
     document.getElementById("three-container")!.append(labelRenderer.domElement);
+
+    const resizeObserver = new ResizeObserver(entries => {
+        console.log(entries[0].contentRect);
+        entries.forEach(entry => {
+            labelRenderer.setSize(entry.contentRect.width, entry.contentRect.width * 9 / 16);
+        });
+    });
+    resizeObserver.observe(document.getElementById("play-area")!);
+
 
     {
         const directionalLight = new THREE.DirectionalLight(0xffffff, 1);

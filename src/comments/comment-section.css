@@ -4,6 +4,8 @@ aside#comment-section {
     display: flex;
     flex-direction: column;
 
+    margin-left: var(--main-radius);
+
     form, section {
         background: white;
     }
