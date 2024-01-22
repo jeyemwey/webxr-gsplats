@@ -12,18 +12,20 @@ export type Comment = {
     text: string;
     created_at: Date;
 };
-type Annotation = {
+export type Annotation = {
     id: Id;
     title: string;
     created_at: Date;
     comments: Comment[];
+    position: { x: number, y: number, z: number };
 };
 
-const allAnnotations: Annotation[] = [
+export const allAnnotations: Annotation[] = [
     {
         id: 1,
         title: "Textilfasern",
         created_at: new Date(2023, 11, 12, 13, 56),
+        position: {x: -0.7, y: 0.3, z: 0.6},
         comments: [
             {
                 id: 1,

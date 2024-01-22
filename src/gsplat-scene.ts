@@ -5,6 +5,7 @@ import * as CameraOrientationStateDistributor from "./util/CameraOrientationStat
 import {AxisProgram} from "./GSplatPrograms/AxisProgram.ts";
 import {GridProgram} from "./GSplatPrograms/GridProgram.ts";
 import {isInDebug} from "./debugMode.ts";
+import {enableRaycastListener} from "./raycastController.ts";
 
 const canvas = document.getElementById("gsplat-canvas") as HTMLCanvasElement;
 const progressContainer = document.getElementById("progress-container") as HTMLDivElement;
@@ -27,7 +28,6 @@ export async function gsplatScene() {
     progressContainer.className = "displayNone";
 
     const resizeObserver = new ResizeObserver(entries => {
-        console.log(entries[0].contentRect);
         entries.forEach(entry => {
             renderer.setSize(entry.contentRect.width, entry.contentRect.width * 9 / 16);
         });
@@ -55,6 +55,8 @@ export async function gsplatScene() {
 
         renderer.render(scene, camera);
     });
+
+    enableRaycastListener(canvas, camera);
 }
 
 async function loadScene(url: string): Promise<SPLAT.Scene> {
