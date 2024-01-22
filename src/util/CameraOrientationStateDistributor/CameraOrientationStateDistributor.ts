@@ -1,6 +1,8 @@
+import {Quaternion} from "gsplat";
+
 type CameraState = {
     position: { x: number, y: number, z: number };
-    rotationQuaternion: number[]; // xyzw
+    rotationQuaternion: Quaternion;
 };
 
 type CameraStateEventListener = (newState: CameraState) => void;

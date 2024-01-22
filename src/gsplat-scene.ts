@@ -22,7 +22,7 @@ export async function gsplatScene() {
     const controls = new SPLAT.OrbitControls(camera, canvas);
 
     // @ts-ignore
-    const scene = await loadScene("./bonsai-7k-raw.splat");
+    const scene = await loadScene("./bonsai-7k-mini.splat");
 
     progressContainer.className = "displayNone";
 
@@ -43,7 +43,8 @@ export async function gsplatScene() {
     function dispatchCameraOrientationState() {
         CameraOrientationStateDistributor.dispatch({
             position: camera.position,
-            rotationQuaternion: camera.rotation.flat()
+            rotationQuaternion: camera.rotation,
+
         });
     }
     dispatchCameraOrientationState();

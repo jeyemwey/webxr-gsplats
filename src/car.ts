@@ -12,7 +12,7 @@ import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 // @ts-ignore
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
-import {Quaternion} from "three";
+import {Euler, Quaternion} from "three";
 
 export async function car() {
     const renderer = new THREE.WebGLRenderer({
@@ -61,10 +61,10 @@ export async function car() {
             newState.position.z);
         camera.lookAt(scene.position);
 
-        // {
-        //     const [x, y, z, w] = newState.rotationQuaternion;
-        //     camera.rotation.setFromQuaternion(new Quaternion(x, y, z, w));
-        // }
+        const {x, y, z} = newState.rotationQuaternion.toEuler();
+
+        //  'XYZ' | 'YXZ' | 'ZXY' | 'ZYX' | 'YZX' | 'XZY';
+        camera.rotation.set(-x, y, z, Euler.DEFAULT_ORDER);
     });
 
     // const controls = new OrbitControls(camera, renderer.domElement);
@@ -197,8 +197,8 @@ export async function car() {
         scene.add(model);
         model.matrixAutoUpdate = false;
         // vehicle.rotation.y = Math.PI / 2;
-        sunflower.scale = new YUKA.Vector3(2, 2,2);
-        sunflower.rotateTo(new YUKA.Vector3(-1, 0, 0),  Math.PI);
+        sunflower.scale = new YUKA.Vector3(2, 2, 2);
+        sunflower.rotateTo(new YUKA.Vector3(-1, 0, 0), Math.PI);
 
         sunflower.setRenderComponent(model, function (entity, renderComponent) {
             renderComponent.matrix.copy(entity.worldMatrix);
