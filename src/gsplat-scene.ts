@@ -23,7 +23,7 @@ export async function gsplatScene() {
     const controls = new SPLAT.OrbitControls(camera, canvas);
 
     // @ts-ignore
-    const scene = await loadScene("./bonsai-7k-mini.splat");
+    const scene = await loadScene("./bonsai-7k-raw.splat");
 
     progressContainer.className = "displayNone";
 
