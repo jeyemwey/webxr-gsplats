@@ -16,7 +16,7 @@ import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRend
 import {Quaternion} from "three";
 import {allAnnotations, Annotation} from "./comments/CommentController.tsx";
 
-export async function car() {
+export async function threeScene() {
     const renderer = new THREE.WebGLRenderer({
         alpha: true,
         antialias: true,

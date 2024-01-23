@@ -22,13 +22,16 @@ export const enableRaycastListener = (canvas: HTMLCanvasElement, camera: Camera)
         const x = (mouseX / canvas.width) * 2 - 1;
         const y = -(mouseY / canvas.height) * 2 + 1;
 
-        const rayTarget = camera.screenPointToRay(x,y);
+        const rayTarget = camera.screenPointToRay(x, y);
         console.log(rayTarget);
 
         const ann: Annotation = {
             comments: [],
             position: rayTarget,
-            id: allAnnotations.length + 1, created_at: new Date(), title: "New Annotation"};
+            id: allAnnotations.length + 1,
+            created_at: new Date(),
+            title: "New Annotation"
+        };
 
         allAnnotations.push(ann);
         CommentStateDistributor.dispatch();
