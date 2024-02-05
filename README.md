@@ -18,9 +18,8 @@ npm run build
 npm link gsplat
 ```
 
-Download the splat models to the `public` folder, so you don't need to get them from the internet every time:
+Download the splat models to the respective folders in `public/scenes` and rename them to `scene.splat` each, so you don't need to get them from the internet every time:
 
-* https://photos.volkland.de/gsplats/bonsai-7k-mini.splat
 * https://photos.volkland.de/gsplats/bonsai-7k-raw.splat
 
 With everything installed, run:

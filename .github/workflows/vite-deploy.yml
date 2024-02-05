@@ -37,7 +37,7 @@ jobs:
           cache: 'npm'
       - name: Download gsplat scene assets
         run: |
-          curl -o public/bonsai-7k-raw.splat "https://photos.volkland.de/gsplats/bonsai-7k-raw.splat"
+          curl -o public/scenes/bonsai/scene.splat "https://photos.volkland.de/gsplats/bonsai-7k-raw.splat"
       - name: Install dependencies
         run: npm install
       - name: Build
