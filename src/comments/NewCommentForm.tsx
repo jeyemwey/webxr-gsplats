@@ -1,6 +1,6 @@
-import {Comment} from "./CommentController.tsx";
 import {useState} from "preact/hooks";
 import {getRandomAuthor} from "./Authors.ts";
+import {Comment} from "./annotations-storage.tsx";
 
 type Props = {
     addCommentToAnnotation: (comment: Comment) => void;

@@ -14,7 +14,8 @@ import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 // @ts-ignore
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
 import {Quaternion} from "three";
-import {allAnnotations, Annotation} from "./comments/CommentController.tsx";
+
+import {allAnnotations, Annotation} from "./comments/annotations-storage.tsx";
 
 export async function threeScene() {
     const renderer = new THREE.WebGLRenderer({

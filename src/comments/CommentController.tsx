@@ -2,56 +2,7 @@ import {useEffect, useState} from "preact/hooks";
 import {DateFormat} from "./DateFormat.tsx";
 import {Bubble} from "./Bubble.tsx";
 import {NewCommentForm} from "./NewCommentForm.tsx";
-import {getRandomAuthor} from "./Authors.ts";
-
-type Id = number;
-
-export type Comment = {
-    id: Id;
-    author: string;
-    text: string;
-    created_at: Date;
-};
-export type Annotation = {
-    id: Id;
-    title: string;
-    created_at: Date;
-    comments: Comment[];
-    position: { x: number, y: number, z: number };
-};
-
-export const allAnnotations: Annotation[] = [
-    {
-        id: 1,
-        title: "Textilfasern",
-        created_at: new Date(2023, 11, 12, 13, 56),
-        position: {x: -0.7, y: 0.3, z: 0.6},
-        comments: [
-            {
-                id: 1,
-                author: getRandomAuthor(),
-                text: "Es wurden violette Textilfasern an der Leiche gefunden, die könnten auf diese Tischdecke passen.",
-                created_at: new Date(2023, 11, 12, 13, 56)
-            },
-            {
-                id: 2,
-                author: "Abby Sciuto",
-                text: "Ich habe die beiden Faser-Proben untersucht und sie passen zueinander 🎉",
-                created_at: new Date(2023, 11, 14, 18, 3)
-            },
-            {
-                id: 2,
-                author: "Jannik Volkland",
-                text: "Danke für die Untersuchung 💐",
-                created_at: (() => {
-                    const d = new Date();
-                    d.setHours(10, 14, 0, 0);
-                    return d;
-                })()
-            }
-        ]
-    }
-];
+import {allAnnotations, Comment, Id} from "./annotations-storage.tsx";
 
 export const CommentController = () => {
     const [activeAnnotationId, setActiveAnnotationId] = useState<Id>(3);

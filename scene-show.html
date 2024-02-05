@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./src/comments/comment-section.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebXR &times; GSplat.JS</title>
+</head>
+<body>
+    <div id="container">
+        <header>
+            <h1>Gaussian Splat Annotations and Viewer <a href="?debug=true" title="Toggle Debug Mode" id="toggle-debug-link">🤖</a></h1>
+            <p id="breadcrumbs"><a href="./">&larr; Overview</a> / <span id="current-scene"></span></p>
+        </header>
+
+        <main id="main-node">
+            <div id="play-area">
+                <div id="progress-container">
+                    <p>
+                        <label for="progress-indicator">Loading scene...</label>
+                    </p>
+                    <progress max="100" id="progress-indicator"></progress>
+                </div>
+                <canvas style="z-index: 1" id="gsplat-canvas"></canvas>
+                <div id="three-container" class="over-previous"> </div>
+            </div>
+            <aside id="comment-section"></aside>
+        </main>
+
+        <pre class="displayNone" id="debug-information">Gsplat Position: x=<span id="debug-pos-x">0</span> y=<span id="debug-pos-y">0</span> z=<span id="debug-pos-z">0</span></pre>
+        <button onclick="window.setActiveAnnotationId(1)">Set Annotations = 1</button>
+
+        <footer>Developed at TH K&ouml;ln</footer>
+    </div>
+    <script type="module" src="/src/page-show-scene.ts"></script>
+</body>
+</html>

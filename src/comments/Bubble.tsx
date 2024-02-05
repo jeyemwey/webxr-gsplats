@@ -1,5 +1,5 @@
-import {Comment} from "./CommentController.tsx";
 import {DateFormat} from "./DateFormat.tsx";
+import {Comment} from "./annotations-storage.tsx";
 
 export const Bubble = ({comment}: {comment: Comment}) => {
   return <li className={`bubble ${comment.author === "Jannik Volkland" ? " authored-by-user": ""}`}>

@@ -15,8 +15,23 @@ body {
     margin: 0 var(--main-radius);
 }
 
-h1 a {
-    text-decoration: none;
+header a {
+    color: inherit;
+    text-decoration: none !important;
+}
+
+#breadcrumbs {
+    line-height: 1em;
+    height: 1em;
+}
+
+#current-scene:empty {
+    width: 100px;
+    background: #eaeaea;
+    height: 0.8em;
+    border-radius: 0.5em;
+    display: inline-block;
+    vertical-align: text-bottom;
 }
 
 #container {

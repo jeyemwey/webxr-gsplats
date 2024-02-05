@@ -1,0 +1,36 @@
+ul#catalogue {
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 2em;
+
+    --main-radius: 0.5rem;
+}
+
+ul#catalogue li {
+    width: 30%;
+    height: fit-content;
+    list-style: none;
+    background: white;
+    border-radius: var(--main-radius);
+
+    cursor: pointer;
+}
+
+ul#catalogue li img {
+    width: 100%;
+    aspect-ratio: 5/4;
+    object-fit: cover;
+    border-radius: var(--main-radius) var(--main-radius) 0 0;
+}
+
+ul#catalogue li aside {
+    padding: calc(2 * var(--main-radius)) calc(3 * var(--main-radius));
+}
+
+ul#catalogue li h4 {
+    margin: 0;
+}
