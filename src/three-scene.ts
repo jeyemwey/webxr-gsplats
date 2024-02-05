@@ -24,7 +24,7 @@ export async function threeScene() {
 
     const canvas = renderer.domElement;
     canvas.className = "over-previous";
-    canvas.style.zIndex = "3";
+    canvas.style.zIndex = "6";
     document.getElementById("three-container")!.appendChild(canvas);
 
     renderer.setClearColor(0xa3a3a3, 0.1);
@@ -83,6 +83,7 @@ export async function threeScene() {
     const resizeObserver = new ResizeObserver(entries => {
         entries.forEach(entry => {
             labelRenderer.setSize(entry.contentRect.width, entry.contentRect.width * 9 / 16);
+            renderer.setSize(entry.contentRect.width, entry.contentRect.width * 9 / 16, false);
         });
     });
     resizeObserver.observe(document.getElementById("play-area")!);

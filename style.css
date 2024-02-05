@@ -52,18 +52,24 @@ canvas {
 }
 
 .over-previous {
-    /*position: absolute;*/
+    position: absolute;
     top: 0;
     left: 0;
-    /*pointer-events: none;*/
+    pointer-events: none;
 }
 
 #three-container {
-    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+}
+
+#three-container canvas {
+    mix-blend-mode: lighten;
 }
 
 #overlay-labelRenderer {
-    z-index: 5;
+    z-index: 10;
+    mix-blend-mode: normal;
 }
 
 footer {
