@@ -6,6 +6,7 @@ import {AxisProgram} from "./GSplatPrograms/AxisProgram.ts";
 import {GridProgram} from "./GSplatPrograms/GridProgram.ts";
 import {isInDebug} from "./debugMode.ts";
 import {enableRaycastListener} from "./raycastController.ts";
+import {currentScene} from "./util/currentScene.ts";
 
 const canvas = document.getElementById("gsplat-canvas") as HTMLCanvasElement;
 const progressContainer = document.getElementById("progress-container") as HTMLDivElement;
@@ -14,7 +15,7 @@ const progressIndicator = document.getElementById("progress-indicator") as HTMLP
 export async function gsplatScene() {
     const renderer = new SPLAT.WebGLRenderer(canvas, []);
 
-    if(isInDebug) {
+    if (isInDebug) {
         renderer.addProgram(new AxisProgram(renderer, []));
         renderer.addProgram(new GridProgram(renderer, []));
     }
@@ -23,7 +24,7 @@ export async function gsplatScene() {
     const controls = new SPLAT.OrbitControls(camera, canvas);
 
     // @ts-ignore
-    const scene = await loadScene("./scenes/bonsai/scene.splat");
+    const scene = await loadScene(`./scenes/${currentScene}/scene.splat`);
 
     progressContainer.className = "displayNone";
 
@@ -47,6 +48,7 @@ export async function gsplatScene() {
 
         });
     }
+
     dispatchCameraOrientationState();
 
     RequestAnimationFrameDispatcher.add(() => {
