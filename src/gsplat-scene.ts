@@ -69,5 +69,3 @@ async function loadScene(url: string): Promise<SPLAT.Scene> {
 
     return scene;
 }
-
-gsplatScene();
