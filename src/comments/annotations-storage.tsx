@@ -28,7 +28,7 @@ export const annotationStorage: SceneAnnotationStorage = {
             id: 1,
             title: "Textilfasern",
             created_at: new Date(2023, 11, 12, 13, 56),
-            position: {x: -0.7, y: 0.3, z: 0.6},
+            position: {x: -0.7, y: -0.5, z: 0.6},
             comments: [
                 {
                     id: 1,
