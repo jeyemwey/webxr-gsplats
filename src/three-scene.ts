@@ -16,6 +16,7 @@ import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRend
 import {Quaternion} from "three";
 
 import {allAnnotations, Annotation} from "./comments/annotations-storage.tsx";
+import {assignThreeVector, vec3GsplatToThree} from "./util/vectorUtils.ts";
 
 export async function threeScene() {
     const renderer = new THREE.WebGLRenderer({
@@ -58,16 +59,9 @@ export async function threeScene() {
 
     camera.lookAt(scene.position);
     CameraOrientationStateDistributor.addEventListener((newState) => {
-        camera.position.set(
-            -1 * newState.position.x,
-            -1 * newState.position.y,
-            newState.position.z);
+        const newPosition = vec3GsplatToThree(newState.position);
+        assignThreeVector(camera.position, newPosition);
         camera.lookAt(scene.position);
-
-        // const {x, y, z} = newState.rotationQuaternion.toEuler();
-
-        //  'XYZ' | 'YXZ' | 'ZXY' | 'ZYX' | 'YZX' | 'XZY';
-        // camera.rotation.set(-x, y, z, Euler.DEFAULT_ORDER);
     });
 
     // const controls = new OrbitControls(camera, renderer.domElement);

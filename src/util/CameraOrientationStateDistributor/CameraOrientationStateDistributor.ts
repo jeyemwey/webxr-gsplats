@@ -1,7 +1,7 @@
-import {Quaternion} from "gsplat";
+import {Quaternion, Vector3} from "gsplat";
 
 type CameraState = {
-    position: { x: number, y: number, z: number };
+    position: Vector3;
     rotationQuaternion: Quaternion;
 };
 
