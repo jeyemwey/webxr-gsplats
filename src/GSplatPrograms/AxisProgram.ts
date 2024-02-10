@@ -39,13 +39,13 @@ class AxisProgram extends SPLAT.ShaderProgram {
         let u_view: WebGLUniformLocation;
         let u_color: WebGLUniformLocation;
 
-        const xVertices = new Float32Array([-50, 0, 0, 50, 0, 0]);
-        const yVertices = new Float32Array([0, -50, 0, 0, 50, 0]);
-        const zVertices = new Float32Array([0, 0, -50, 0, 0, 50]);
+        const xVertices = new Float32Array([0, 0, 0, 50, 0, 0]);
+        const yVertices = new Float32Array([0, 0, 0, 0, 50, 0]);
+        const zVertices = new Float32Array([0, 0, 0, 0, 0, 50]);
 
         const xColor = new Float32Array([1, 0, 0, 0.5]);
         const yColor = new Float32Array([0, 1, 0, 0.5]);
-        const zColor = new Float32Array([0, 0.5, 1, 0.5]);
+        const zColor = new Float32Array([0, 0, 1, 0.5]);
 
         this._initialize = () => {
             vertexBuffer = gl.createBuffer() as WebGLBuffer;
@@ -60,6 +60,7 @@ class AxisProgram extends SPLAT.ShaderProgram {
 
         const drawAxis = (vertices: Float32Array, color: Float32Array) => {
             gl.uniform4fv(u_color, color);
+            gl.lineWidth(200);
             gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
             gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
             gl.vertexAttribPointer(positionAttribute, 3, gl.FLOAT, false, 0, 0);
