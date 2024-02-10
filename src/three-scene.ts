@@ -36,7 +36,7 @@ export async function threeScene() {
 
     if (isInDebug) {
         const axesHelper = new THREE.AxesHelper(5);
-        axesHelper.position.add(new THREE.Vector3(0, 0.2, 0));
+        axesHelper.position.add(new THREE.Vector3(0.0, 0.0, 0.0));
 
         scene.add(axesHelper);
         const gridHelper = new THREE.GridHelper(100, 100, 0xff0000, 0x808080);
@@ -104,11 +104,11 @@ export async function threeScene() {
     entityManager.add(sunflower);
 
     // @ts-ignore
-    function createCpointMesh(name, x, y, z) {
+    function createCpointMesh(name: Id | string, position: THREE.Vector3) {
         const geo = new THREE.SphereGeometry(0.1);
         const mat = new THREE.MeshBasicMaterial({color: 0xff0000});
         const mesh = new THREE.Mesh(geo, mat);
-        mesh.position.set(x, y, z);
+        assignThreeVector(mesh.position, position);
         mesh.name = name;
         return mesh;
     }
@@ -116,18 +116,19 @@ export async function threeScene() {
     const group = new THREE.Group();
     scene.add(group);
 
-    const tooltipYOffset = 0.5;
+    const tooltipYOffset = new THREE.Vector3(0,0.6,0);
     const addAnnotationsToCanvas = (allAnnotations: Annotation[]) => {
         allAnnotations.forEach(a => {
-            group.add(createCpointMesh(a.id, -a.position.x, a.position.y, a.position.z));
+            let position = vec3GsplatToThree(a.position);
+            group.add(createCpointMesh(a.id, position));
 
-            const textilfasernP = document.createElement("p");
-            textilfasernP.className = "tooltip show";
-            textilfasernP.textContent = a.title;
-            const textilfasernLabel = new CSS2DObject(textilfasernP);
-            textilfasernLabel.position.set(-a.position.x, a.position.y + tooltipYOffset, a.position.z);
-            scene.add(textilfasernLabel);
+            const tooltip = document.createElement("p");
+            tooltip.className = "tooltip show";
+            tooltip.textContent = a.title;
+            const tooltip2dObject = new CSS2DObject(tooltip);
 
+            assignThreeVector(tooltip2dObject.position, position.clone().add(tooltipYOffset));
+            scene.add(tooltip2dObject);
         });
     };
     addAnnotationsToCanvas(allAnnotations);

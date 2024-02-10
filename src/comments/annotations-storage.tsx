@@ -1,5 +1,6 @@
 import {getRandomAuthor} from "./Authors.ts";
 import {currentScene} from "../util/currentScene.ts";
+import {Vector3 as GVector3} from "gsplat";
 
 export type Id = number;
 export type Comment = {
@@ -13,7 +14,7 @@ export type Annotation = {
     title: string;
     created_at: Date;
     comments: Comment[];
-    position: { x: number, y: number, z: number };
+    position: GVector3;
 };
 
 export type AvailableScenes = "bonsai" | "dead-kris";
@@ -28,7 +29,7 @@ export const annotationStorage: SceneAnnotationStorage = {
             id: 1,
             title: "Textilfasern",
             created_at: new Date(2023, 11, 12, 13, 56),
-            position: {x: -0.7, y: -0.5, z: 0.6},
+            position: new GVector3(-.7, .8, .6),
             comments: [
                 {
                     id: 1,
