@@ -15,7 +15,7 @@ import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
 import {Quaternion} from "three";
 
-import {allAnnotations, Annotation} from "./comments/annotations-storage.tsx";
+import {allAnnotations, Annotation} from "./comments/annotations-storage.ts";
 import {assignThreeVector, vec3GsplatToThree} from "./util/vectorUtils.ts";
 
 export async function threeScene() {

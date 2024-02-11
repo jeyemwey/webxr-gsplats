@@ -2,7 +2,7 @@ import {useEffect, useState} from "preact/hooks";
 import {DateFormat} from "./DateFormat.tsx";
 import {Bubble} from "./Bubble.tsx";
 import {NewCommentForm} from "./NewCommentForm.tsx";
-import {allAnnotations, Comment, Id} from "./annotations-storage.tsx";
+import {allAnnotations, Comment, Id} from "./annotations-storage.ts";
 
 export const CommentController = () => {
     const [activeAnnotationId, setActiveAnnotationId] = useState<Id>(3);

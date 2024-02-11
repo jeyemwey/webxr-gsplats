@@ -20,21 +20,21 @@ export type Comment = {
     created_at: Date;
 };
 
-type ScenesWithNames = {
+type SceneWithName = {
     slug: AvailableScenes;
     name: string;
 }
 
-export const scenes: ScenesWithNames[] = [
-    {
+export const scenes: { [K in AvailableScenes]: SceneWithName; }  = {
+    "bonsai": {
         slug: "bonsai",
         name: "Bonsai Room",
     },
-    {
+    "dead-kris": {
         slug: "dead-kris",
         name: "Toter Kris",
     }
-];
+};
 
 export const annotationStorage: { [K in AvailableScenes]: Annotation[]; } = {
     "dead-kris": [], // TODO: Add comments

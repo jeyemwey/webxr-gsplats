@@ -1,4 +1,4 @@
-import {AvailableScenes, scenes} from "../comments/annotations-storage.tsx";
+import {AvailableScenes, scenes} from "../comments/annotations-storage.ts";
 
 const urlParams = new URLSearchParams(window.location.search);
 
@@ -7,6 +7,6 @@ export const currentScene: AvailableScenes = urlParams.get("slug") as AvailableS
 window.onload = () => {
     const breadcrumbElement = document.getElementById("current-scene");
     if (breadcrumbElement) {
-        breadcrumbElement!.textContent = scenes.find((s) => s.slug === currentScene)!.name;
+        breadcrumbElement!.textContent = scenes[currentScene].name;
     }
 };
