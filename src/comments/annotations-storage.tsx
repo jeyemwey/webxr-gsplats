@@ -3,12 +3,8 @@ import {currentScene} from "../util/currentScene.ts";
 import {Vector3 as GVector3} from "gsplat";
 
 export type Id = number;
-export type Comment = {
-    id: Id;
-    author: string;
-    text: string;
-    created_at: Date;
-};
+
+export type AvailableScenes = "bonsai" | "dead-kris";
 export type Annotation = {
     id: Id;
     title: string;
@@ -17,12 +13,30 @@ export type Annotation = {
     position: GVector3;
 };
 
-export type AvailableScenes = "bonsai" | "dead-kris";
-type SceneAnnotationStorage = {
-    [K in AvailableScenes]: Annotation[];
+export type Comment = {
+    id: Id;
+    author: string;
+    text: string;
+    created_at: Date;
+};
+
+type ScenesWithNames = {
+    slug: AvailableScenes;
+    name: string;
 }
 
-export const annotationStorage: SceneAnnotationStorage = {
+export const scenes: ScenesWithNames[] = [
+    {
+        slug: "bonsai",
+        name: "Bonsai Room",
+    },
+    {
+        slug: "dead-kris",
+        name: "Toter Kris",
+    }
+];
+
+export const annotationStorage: { [K in AvailableScenes]: Annotation[]; } = {
     "dead-kris": [], // TODO: Add comments
     "bonsai": [
         {
@@ -59,27 +73,3 @@ export const annotationStorage: SceneAnnotationStorage = {
 };
 
 export const allAnnotations = annotationStorage[currentScene];
-
-
-type ScenesWithAnnotations = {
-    slug: AvailableScenes;
-    name: string;
-}
-export const scenes: ScenesWithAnnotations[] = [
-    {
-        slug: "bonsai",
-        name: "Bonsai Room",
-    },
-    {
-        slug: "dead-kris",
-        name: "Toter Kris",
-    },
-    {
-        slug: "bonsai",
-        name: "Bonsai Room",
-    },
-    {
-        slug: "bonsai",
-        name: "Bonsai Room",
-    },
-];
