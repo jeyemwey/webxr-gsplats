@@ -37,11 +37,11 @@ export async function threeScene(gCameraFuture: Promise<Camera>) {
 
     if (isInDebug) {
         const axesHelper = new THREE.AxesHelper(5);
-        axesHelper.position.add(new THREE.Vector3(0.0, 0.0, 0.0));
+        // axesHelper.position.add(new THREE.Vector3(0.0, 0.0, 0.0));
         scene.add(axesHelper);
 
         const gridHelper = new THREE.GridHelper(100, 100, 0x00ff00, 0x00ff00);
-        gridHelper.position.add(new THREE.Vector3(0.0, 0.2, 0.0));
+        // gridHelper.position.add(new THREE.Vector3(0.0, 0.2, 0.0));
         scene.add(gridHelper);
     }
 

@@ -5,7 +5,7 @@ import {NewCommentForm} from "./NewCommentForm.tsx";
 import {allAnnotations, Comment, Id} from "./annotations-storage.ts";
 
 export const CommentController = () => {
-    const [activeAnnotationId, setActiveAnnotationId] = useState<Id>(3);
+    const [activeAnnotationId, setActiveAnnotationId] = useState<Id>(Number.MAX_VALUE);
     const [forceRerender, setForceRerender] = useState(0);
     const rerender = () => setForceRerender(forceRerender + 1);
 

@@ -27,24 +27,68 @@ type SceneWithName = {
     name: string;
 }
 
-export const scenes: { [K in AvailableScenes]: SceneWithName; }  = {
+export const scenes: { [K in AvailableScenes]: SceneWithName; } = {
     "bonsai": {
         slug: "bonsai",
         name: "Bonsai Room",
     },
-    "garden":  {
+    "garden": {
         slug: "garden",
         name: "Gartentisch",
     },
-    "bicycle":  {
+    "bicycle": {
         slug: "bicycle",
         name: "Fahrrad",
     },
 };
 
 export const annotationStorage: { [K in AvailableScenes]: Annotation[]; } = {
-    "garden": [], // TODO: Add comments,
-    "bicycle": [], // TODO: Add comments
+    "garden": [
+        {
+            id: 1,
+            title: "Außenbeleuchtung",
+            created_at: new Date(2024, 2, 6, 13, 22),
+            position: new GVector3(0.25, 0.5, -1.5),
+            comments: []
+        },
+        {
+            id: 2,
+            title: "Fußball",
+            created_at: new Date(2024, 2, 6, 13, 22),
+            position: new GVector3(-0.2, 0.4, 0.8),
+            comments: []
+        },
+        {
+            id: 3,
+            title: "Milchkanne",
+            created_at: new Date(2024, 2, 6, 13, 22),
+            position: new GVector3(5, -0.6, -0.3),
+            comments: []
+        },
+    ],
+    "bicycle": [
+        {
+            id: 1,
+            title: "Reifenprofil",
+            created_at: new Date(2024, 2, 6, 13, 22),
+            position: new GVector3(-0.1, -0.1, 1.2),
+            comments: []
+        },
+        {
+            id: 2,
+            title: "Fahrradschloss",
+            created_at: new Date(2024, 2, 2, 13, 22),
+            position: new GVector3(0.15, -0.3, 0),
+            comments: []
+        },
+        {
+            id: 3,
+            title: "Schuhabdrücke",
+            created_at: new Date(2024, 2, 2, 13, 22),
+            position: new GVector3(2, 0.8, -2),
+            comments: []
+        }
+    ],
     "bonsai": [
         {
             id: 1,
