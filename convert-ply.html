@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8"/>
+    <title>WebXR &times; GSplat.JS</title>
+</head>
+<body>
+<div id="container">
+    <header>
+        <h1>Gaussian Splat Annotations and Viewer</h1>
+    </header>
+
+    <main id="main-node">
+
+        <form id="form">
+            <input type="checkbox" id="isPolycam"/> <label for="isPolycam">Is Polycam?</label><br/>
+            <input type="file" name="file" id="file"/>
+        </form>
+
+        <p>Log:</p>
+        <ul id="log">
+            <li>Website loaded</li>
+        </ul>
+
+    </main>
+
+    <pre class="displayNone" id="debug-information"></pre>
+
+    <footer>Developed at TH K&ouml;ln. <a href="convert-ply.html">PLY to Splat-Converter</a></footer>
+</div>
+<script type="module" src="/src/page-convert-ply.ts"></script>
+</body>
+</html>

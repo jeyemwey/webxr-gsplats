@@ -6,7 +6,8 @@ export default defineConfig({
         lib: {
             entry: [
                 "./index.html",
-                "./scene-show.html"
+                "./scene-show.html",
+                "./convert-ply.html"
             ]
         }
     }
