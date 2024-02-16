@@ -4,7 +4,7 @@ import {Vector3 as GVector3} from "gsplat";
 
 export type Id = number;
 
-export type AvailableScenes = "bonsai" | "dead-kris";
+export type AvailableScenes = "bonsai" | "dead-kris" | "garden" | "bicycle";
 export type Annotation = {
     id: Id;
     title: string;
@@ -33,10 +33,20 @@ export const scenes: { [K in AvailableScenes]: SceneWithName; }  = {
     "dead-kris": {
         slug: "dead-kris",
         name: "Toter Kris",
-    }
+    },
+    "garden":  {
+        slug: "garden",
+        name: "Gartentisch",
+    },
+    "bicycle":  {
+        slug: "bicycle",
+        name: "Fahrrad",
+    },
 };
 
 export const annotationStorage: { [K in AvailableScenes]: Annotation[]; } = {
+    "garden": [], // TODO: Add comments,
+    "bicycle": [], // TODO: Add comments
     "dead-kris": [], // TODO: Add comments
     "bonsai": [
         {

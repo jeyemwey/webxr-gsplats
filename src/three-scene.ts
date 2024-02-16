@@ -137,6 +137,7 @@ export async function threeScene(gCameraFuture: Promise<Camera>) {
         });
     };
     addAnnotationsToCanvas(allAnnotations);
+    addHelpfulArrow(scene);
 
     CommentStateDistributor.addEventListener(() => {
         group.clear();

@@ -8,6 +8,7 @@ import {GridProgram} from "./GSplatPrograms/GridProgram.ts";
 import {isInDebug} from "./debugMode.ts";
 import {enableRaycastListener} from "./raycastController.ts";
 import {currentScene} from "./util/currentScene.ts";
+import {scenePreparations} from "./GSplatPrograms/prepare-scene.ts";
 
 const canvas = document.getElementById("gsplat-canvas") as HTMLCanvasElement;
 const progressContainer = document.getElementById("progress-container") as HTMLDivElement;
@@ -26,6 +27,7 @@ export async function gsplatScene(resolveGCamera: (value: SPLAT.Camera) => void)
 
     // @ts-ignore
     const scene = await loadScene(`./scenes/${currentScene}/scene.splat`);
+    scenePreparations[currentScene](scene);
 
     progressContainer.className = "displayNone";
 
