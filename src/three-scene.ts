@@ -13,11 +13,11 @@ import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 // @ts-ignore
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
-import {Quaternion} from "three";
 
 import {allAnnotations, Annotation} from "./comments/annotations-storage.ts";
 import {assignThreeVector, getCameraFOV, vec3GsplatToThree} from "./util/vectorUtils.ts";
 import {Camera} from "gsplat";
+import {addHelpfulArrow} from "./GSplatPrograms/prepare-scene.ts";
 
 export async function threeScene(gCameraFuture: Promise<Camera>) {
     const renderer = new THREE.WebGLRenderer({
@@ -55,22 +55,12 @@ export async function threeScene(gCameraFuture: Promise<Camera>) {
         1000,
     );
 
-    // @ts-ignore
-    window.postQuad = () => {
-        const q = new Quaternion();
-        q.setFromEuler(camera.rotation);
-        console.log(q);
-    };
-
     camera.lookAt(scene.position);
     CameraOrientationStateDistributor.addEventListener((newState) => {
         const newPosition = vec3GsplatToThree(newState.position);
         assignThreeVector(camera.position, newPosition);
         camera.lookAt(scene.position);
     });
-
-    // const controls = new OrbitControls(camera, renderer.domElement);
-    // controls.update();
 
     const labelRenderer = new CSS2DRenderer();
     labelRenderer.setSize(canvas.clientWidth, canvas.clientHeight);
@@ -194,7 +184,6 @@ export async function threeScene(gCameraFuture: Promise<Camera>) {
         const model = glb.scene;
         scene.add(model);
         model.matrixAutoUpdate = false;
-        // vehicle.rotation.y = Math.PI / 2;
         sunflower.scale = new YUKA.Vector3(2, 2, 2);
         sunflower.rotateTo(new YUKA.Vector3(-1, 0, 0), Math.PI);
 

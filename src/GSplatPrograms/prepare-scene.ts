@@ -16,9 +16,6 @@ type SceneTranslation = (scene: SPLAT.Scene) => void;
 export const scenePreparations: { [K in AvailableScenes]: SceneTranslation; } = {
     bonsai: function (_scene: SPLAT.Scene): void { /* NOP */
     },
-    "dead-kris": function (_scene: SPLAT.Scene): void {
-        throw new Error("Function not implemented.");
-    },
     garden: function (scene: SPLAT.Scene): void { /* NOOP */
         scene.objects[0].rotation = Quaternion.FromAxisAngle(new Vector3(1, 0, 0), DEG2RAD * -30);
         scene.objects[0].position = scene.objects[0].position.add(new Vector3(-0.5, -2.75, 0));
