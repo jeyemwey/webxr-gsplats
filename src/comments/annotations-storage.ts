@@ -43,7 +43,7 @@ export const annotationStorage: { [K in AvailableScenes]: Annotation[]; } = {
             id: 1,
             title: "Textilfasern",
             created_at: new Date(2023, 11, 12, 13, 56),
-            position: new GVector3(-.7, .8, .6),
+            position: new GVector3(-.7, .4, -.6),
             comments: [
                 {
                     id: 1,

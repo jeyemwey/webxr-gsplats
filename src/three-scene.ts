@@ -16,9 +16,10 @@ import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRend
 import {Quaternion} from "three";
 
 import {allAnnotations, Annotation} from "./comments/annotations-storage.ts";
-import {assignThreeVector, vec3GsplatToThree} from "./util/vectorUtils.ts";
+import {assignThreeVector, getCameraFOV, vec3GsplatToThree} from "./util/vectorUtils.ts";
+import {Camera} from "gsplat";
 
-export async function threeScene() {
+export async function threeScene(gCameraFuture: Promise<Camera>) {
     const renderer = new THREE.WebGLRenderer({
         alpha: true,
         antialias: true,
@@ -37,16 +38,20 @@ export async function threeScene() {
     if (isInDebug) {
         const axesHelper = new THREE.AxesHelper(5);
         axesHelper.position.add(new THREE.Vector3(0.0, 0.0, 0.0));
-
         scene.add(axesHelper);
-        const gridHelper = new THREE.GridHelper(100, 100, 0xff0000, 0x808080);
+
+        const gridHelper = new THREE.GridHelper(100, 100, 0x00ff00, 0x00ff00);
+        gridHelper.position.add(new THREE.Vector3(0.0, 0.2, 0.0));
         scene.add(gridHelper);
     }
 
+    const gCamera = await gCameraFuture;
+    console.log(`awaited gcamera, got fov ${getCameraFOV(gCamera)}deg from it.`)
+
     const camera = new THREE.PerspectiveCamera(
-        45,
+        getCameraFOV(gCamera),
         canvas.clientWidth / canvas.clientHeight,
-        0.1,
+        .1,
         1000,
     );
 
@@ -116,7 +121,7 @@ export async function threeScene() {
     const group = new THREE.Group();
     scene.add(group);
 
-    const tooltipYOffset = new THREE.Vector3(0,0.6,0);
+    const tooltipYOffset = new THREE.Vector3(0, 0.3, 0);
     const addAnnotationsToCanvas = (allAnnotations: Annotation[]) => {
         allAnnotations.forEach(a => {
             let position = vec3GsplatToThree(a.position);

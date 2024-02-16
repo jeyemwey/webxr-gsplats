@@ -1,6 +1,7 @@
 import * as SPLAT from "gsplat";
 import * as RequestAnimationFrameDispatcher from "./util/animationFrameController/RequestAnimationFrameDispatcher.ts";
-import * as CameraOrientationStateDistributor from "./util/CameraOrientationStateDistributor/CameraOrientationStateDistributor.ts";
+import * as CameraOrientationStateDistributor
+    from "./util/CameraOrientationStateDistributor/CameraOrientationStateDistributor.ts";
 
 import {AxisProgram} from "./GSplatPrograms/AxisProgram.ts";
 import {GridProgram} from "./GSplatPrograms/GridProgram.ts";
@@ -12,7 +13,7 @@ const canvas = document.getElementById("gsplat-canvas") as HTMLCanvasElement;
 const progressContainer = document.getElementById("progress-container") as HTMLDivElement;
 const progressIndicator = document.getElementById("progress-indicator") as HTMLProgressElement;
 
-export async function gsplatScene() {
+export async function gsplatScene(resolveGCamera: (value: SPLAT.Camera) => void) {
     const renderer = new SPLAT.WebGLRenderer(canvas, []);
 
     if (isInDebug) {
@@ -40,6 +41,7 @@ export async function gsplatScene() {
     };
     handleResize();
     window.addEventListener("resize", handleResize);
+    resolveGCamera(camera);
 
     function dispatchCameraOrientationState() {
         CameraOrientationStateDistributor.dispatch({

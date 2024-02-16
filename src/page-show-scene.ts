@@ -3,9 +3,14 @@ import {gsplatScene} from "./gsplat-scene.ts";
 import {isInDebug} from "./debugMode.ts";
 import {initPositionDisplay} from "./util/CameraOrientationStateDistributor/positionDisplay.ts";
 import {initComments} from "./comments/init.tsx";
+import {future} from "./util/Future.ts";
 
-threeScene()
-gsplatScene()
+import {Camera as GCamera} from "gsplat";
+
+const {resolve: resolveGCamera, future: gCameraFuture} = future<GCamera>();
+
+gsplatScene(resolveGCamera)
+threeScene(gCameraFuture)
 initPositionDisplay()
 initComments(document.getElementById("comment-section")!)
 
