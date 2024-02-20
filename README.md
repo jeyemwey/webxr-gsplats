@@ -23,6 +23,8 @@ Download the splat models to the respective folders in `public/scenes` and renam
 * https://photos.volkland.de/gsplats/bonsai-7k-raw.splat
 * https://photos.volkland.de/gsplats/bicycle-7k.splat
 * https://photos.volkland.de/gsplats/garden-7k.splat
+* https://photos.volkland.de/gsplats/wohnzimmer-converted.splat
+* https://photos.volkland.de/gsplats/teekueche-converted.splat
 
 With everything installed, run:
 

@@ -6,7 +6,9 @@ export type Id = number;
 
 export type AvailableScenes = "bonsai"
     | "garden"
-    | "bicycle";
+    | "bicycle"
+    | "teekueche"
+    | "wohnzimmer";
 export type Annotation = {
     id: Id;
     title: string;
@@ -40,9 +42,13 @@ export const scenes: { [K in AvailableScenes]: SceneWithName; } = {
         slug: "bicycle",
         name: "Fahrrad",
     },
+    "teekueche": {slug: "teekueche", name: "Teeküche"},
+    "wohnzimmer": {slug: "wohnzimmer", name: "Wohnzimmer"}
 };
 
 export const annotationStorage: { [K in AvailableScenes]: Annotation[]; } = {
+    "wohnzimmer": [],
+    "teekueche": [],
     "garden": [
         {
             id: 1,
