@@ -92,12 +92,11 @@ export async function threeScene(gCameraFuture: Promise<Camera>) {
         scene.add(directionalLight);
     }
 
-    const sunflower = new YUKA.Vehicle();
-    // @ts-ignore
-    sunflower.position.set(0, 0, 0);
-
     const entityManager = new YUKA.EntityManager();
-    entityManager.add(sunflower);
+    if (isInDebug) {
+        const sunflower = new YUKA.Vehicle();
+        addSunflower(scene, sunflower, entityManager);
+    }
 
     // @ts-ignore
     function createCpointMesh(name: Id | string, position: THREE.Vector3) {
@@ -145,7 +144,7 @@ export async function threeScene(gCameraFuture: Promise<Camera>) {
     const mousePos = new THREE.Vector2();
     const raycaster = new THREE.Raycaster();
 
-    MousePositionStateDistributor.addEventListener(({x,y}) => {
+    MousePositionStateDistributor.addEventListener(({x, y}) => {
         mousePos.x = x;
         mousePos.y = y;
 
@@ -169,28 +168,6 @@ export async function threeScene(gCameraFuture: Promise<Camera>) {
         }
     });
 
-    const bonsaiP = document.createElement("p");
-    bonsaiP.className = "tooltip show";
-    const bonsaiLabel = new CSS2DObject(bonsaiP);
-    bonsaiLabel.position.set(0, 0.75, 0);
-
-
-    const loader = new GLTFLoader();
-    // @ts-ignore
-    loader.load("./sunflower.gltf", function (glb) {
-        const model = glb.scene;
-        scene.add(model);
-        model.matrixAutoUpdate = false;
-        sunflower.scale = new YUKA.Vector3(2, 2, 2);
-        sunflower.rotateTo(new YUKA.Vector3(-1, 0, 0), Math.PI);
-
-        sunflower.setRenderComponent(model, function (entity, renderComponent) {
-            renderComponent.matrix.copy(entity.worldMatrix);
-        });
-
-        model.add(bonsaiLabel);
-    });
-
     const time = new YUKA.Time();
 
     RequestAnimationFrameDispatcher.setThreeRenderer(renderer);
@@ -199,7 +176,6 @@ export async function threeScene(gCameraFuture: Promise<Camera>) {
         entityManager.update(delta);
         labelRenderer.render(scene, camera);
 
-        bonsaiP.textContent = `Bonsai`;
         renderer.render(scene, camera);
     });
 
@@ -208,5 +184,33 @@ export async function threeScene(gCameraFuture: Promise<Camera>) {
         camera.updateProjectionMatrix();
         renderer.setSize(canvas.clientWidth, canvas.clientHeight);
         labelRenderer.setSize(canvas.clientWidth, canvas.clientHeight);
+    });
+}
+
+function addSunflower(scene: THREE.Scene, sunflower: YUKA.Vehicle, entityManager: YUKA.EntityManager) {
+    const bonsaiP = document.createElement("p");
+    bonsaiP.className = "tooltip show";
+    bonsaiP.textContent = `Bonsai`;
+    const bonsaiLabel = new CSS2DObject(bonsaiP);
+    bonsaiLabel.position.set(0, 0.75, 0);
+
+    const loader = new GLTFLoader();
+    // @ts-ignore
+    loader.load("./sunflower.gltf", function (glb) {
+        const model = glb.scene;
+        scene.add(model);
+        model.matrixAutoUpdate = false;
+
+        // @ts-ignore
+        sunflower.position.set(0, 0, 0);
+        sunflower.scale = new YUKA.Vector3(2, 2, 2);
+        sunflower.rotateTo(new YUKA.Vector3(-1, 0, 0), Math.PI);
+
+        sunflower.setRenderComponent(model, function (entity, renderComponent) {
+            renderComponent.matrix.copy(entity.worldMatrix);
+        });
+        entityManager.add(sunflower);
+
+        model.add(bonsaiLabel);
     });
 }
