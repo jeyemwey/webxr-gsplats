@@ -18,6 +18,7 @@ import {allAnnotations, Annotation} from "./comments/annotations-storage.ts";
 import {assignThreeVector, getCameraFOV, vec3GsplatToThree} from "./util/vectorUtils.ts";
 import {Camera} from "gsplat";
 import {addHelpfulArrow} from "./GSplatPrograms/prepare-scene.ts";
+import MousePositionStateDistributor from "./util/MousePositionStateDistributor.ts";
 
 export async function threeScene(gCameraFuture: Promise<Camera>) {
     const renderer = new THREE.WebGLRenderer({
@@ -143,14 +144,10 @@ export async function threeScene(gCameraFuture: Promise<Camera>) {
 
     const mousePos = new THREE.Vector2();
     const raycaster = new THREE.Raycaster();
-    canvas.addEventListener("mousemove", function (event) {
-        var rect = canvas.getBoundingClientRect();
-        var mouseX = event.clientX - rect.left;
-        var mouseY = event.clientY - rect.top;
 
-        // Calculate the transformed values in the range [-1, 1]
-        mousePos.x = (mouseX / canvas.width) * 2 - 1;
-        mousePos.y = -(mouseY / canvas.height) * 2 + 1;
+    MousePositionStateDistributor.addEventListener(({x,y}) => {
+        mousePos.x = x;
+        mousePos.y = y;
 
         raycaster.setFromCamera(mousePos, camera);
         const intersects = raycaster.intersectObject(group);

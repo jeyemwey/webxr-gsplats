@@ -2,7 +2,7 @@ import * as SPLAT from "gsplat";
 import * as RequestAnimationFrameDispatcher from "./util/animationFrameController/RequestAnimationFrameDispatcher.ts";
 import CameraOrientationStateDistributor
     from "./util/CameraOrientationStateDistributor/CameraOrientationStateDistributor.ts";
-
+import MousePositionStateDistributor from "./util/MousePositionStateDistributor.ts";
 import {AxisProgram} from "./GSplatPrograms/AxisProgram.ts";
 import {GridProgram} from "./GSplatPrograms/GridProgram.ts";
 import {isInDebug} from "./debugMode.ts";
@@ -63,6 +63,18 @@ export async function gsplatScene(resolveGCamera: (value: SPLAT.Camera) => void)
     });
 
     enableRaycastListener(canvas, camera);
+
+    canvas.addEventListener("mousemove", function (event) {
+        var rect = canvas.getBoundingClientRect();
+        var mouseX = event.clientX - rect.left;
+        var mouseY = event.clientY - rect.top;
+
+        // Calculate the transformed values in the range [-1, 1]
+        const x = (mouseX / canvas.width) * 2 - 1;
+        const y = -(mouseY / canvas.height) * 2 + 1;
+
+        MousePositionStateDistributor.dispatch({x, y});
+    });
 }
 
 async function loadScene(url: string): Promise<SPLAT.Scene> {
