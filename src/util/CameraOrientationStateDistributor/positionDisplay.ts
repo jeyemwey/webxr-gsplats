@@ -1,4 +1,4 @@
-import * as CameraOrientationStateDistributor from "./CameraOrientationStateDistributor.ts";
+import CameraOrientationStateDistributor from "./CameraOrientationStateDistributor.ts";
 import {isInDebug} from "../../debugMode.ts";
 
 export const initPositionDisplay = () => {

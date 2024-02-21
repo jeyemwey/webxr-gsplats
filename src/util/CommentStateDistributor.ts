@@ -1,9 +1,6 @@
-type CommentStateEventListener = () => void;
+import AbstractStateDistributor from "./AbstractStateDistributor.ts";
 
-const listener: CommentStateEventListener[] = [];
+const instance = new class CommentStateDistributor extends AbstractStateDistributor<void> {
+}();
 
-export const addEventListener = (l: CommentStateEventListener) => listener.push(l);
-
-export const dispatch = () => {
-    listener.forEach(l => l());
-}
+export default instance;

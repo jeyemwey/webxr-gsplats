@@ -2,10 +2,10 @@ import * as THREE from "three";
 import * as YUKA from "yuka";
 import {isInDebug} from "./debugMode.ts";
 
-import * as CameraOrientationStateDistributor
+import CameraOrientationStateDistributor
     from "./util/CameraOrientationStateDistributor/CameraOrientationStateDistributor.ts";
 import * as RequestAnimationFrameDispatcher from "./util/animationFrameController/RequestAnimationFrameDispatcher.ts";
-import * as CommentStateDistributor from "./util/CommentStateDistributor.ts";
+import CommentStateDistributor from "./util/CommentStateDistributor.ts";
 
 // @ts-ignore
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";

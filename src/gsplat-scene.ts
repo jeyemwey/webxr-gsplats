@@ -1,6 +1,6 @@
 import * as SPLAT from "gsplat";
 import * as RequestAnimationFrameDispatcher from "./util/animationFrameController/RequestAnimationFrameDispatcher.ts";
-import * as CameraOrientationStateDistributor
+import CameraOrientationStateDistributor
     from "./util/CameraOrientationStateDistributor/CameraOrientationStateDistributor.ts";
 
 import {AxisProgram} from "./GSplatPrograms/AxisProgram.ts";
