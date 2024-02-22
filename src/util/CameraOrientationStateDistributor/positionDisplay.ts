@@ -14,7 +14,7 @@ export const initPositionDisplay = () => {
 
     let positionUpdateCount = 0;
     CameraOrientationStateDistributor.addEventListener((state) => {
-        if (positionUpdateCount % 1000 == 0) {
+        if (positionUpdateCount % 100 == 0) {
             debugPosX.textContent = state.position.x.toFixed(3);
             debugPosY.textContent = state.position.y.toFixed(3);
             debugPosZ.textContent = state.position.z.toFixed(3);

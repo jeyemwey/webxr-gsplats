@@ -19,6 +19,7 @@ import {assignThreeVector, getCameraFOV, vec3GsplatToThree} from "./util/vectorU
 import {Camera} from "gsplat";
 import {addHelpfulArrow} from "./GSplatPrograms/prepare-scene.ts";
 import MousePositionStateDistributor from "./util/MousePositionStateDistributor.ts";
+import CanvasSizeStateDistributor from "./util/CanvasSizeStateDistributor.ts";
 
 export async function threeScene(gCameraFuture: Promise<Camera>) {
     const renderer = new THREE.WebGLRenderer({
@@ -71,13 +72,22 @@ export async function threeScene(gCameraFuture: Promise<Camera>) {
     labelRenderer.domElement.id = "overlay-labelRenderer";
     document.getElementById("three-container")!.append(labelRenderer.domElement);
 
-    const resizeObserver = new ResizeObserver(entries => {
-        entries.forEach(entry => {
-            labelRenderer.setSize(entry.contentRect.width, entry.contentRect.width * 9 / 16);
-            renderer.setSize(entry.contentRect.width, entry.contentRect.width * 9 / 16, false);
-        });
+    // const resizeObserver = new ResizeObserver(entries => {
+    //     entries.forEach(entry => {
+    //
+    //
+    //
+    //         // labelRenderer.setSize(entry.contentRect.width, entry.contentRect.width * 9 / 16);
+    //         // renderer.setSize(entry.contentRect.width, entry.contentRect.width * 9 / 16, false);
+    //     });
+    // });
+    // resizeObserver.observe(document.getElementById("play-area")!);
+    CanvasSizeStateDistributor.addEventListener(({width, height}) => {
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+        labelRenderer.setSize(width, height);
     });
-    resizeObserver.observe(document.getElementById("play-area")!);
 
 
     {
@@ -177,13 +187,6 @@ export async function threeScene(gCameraFuture: Promise<Camera>) {
         labelRenderer.render(scene, camera);
 
         renderer.render(scene, camera);
-    });
-
-    window.addEventListener("resize", function () {
-        camera.aspect = canvas.clientWidth / canvas.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-        labelRenderer.setSize(canvas.clientWidth, canvas.clientHeight);
     });
 }
 

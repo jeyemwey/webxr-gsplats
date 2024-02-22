@@ -9,6 +9,7 @@ import {isInDebug} from "./debugMode.ts";
 import {enableRaycastListener} from "./raycastController.ts";
 import {currentScene} from "./util/currentScene.ts";
 import {scenePreparations} from "./GSplatPrograms/prepare-scene.ts";
+import CanvasSizeStateDistributor from "./util/CanvasSizeStateDistributor.ts";
 
 const canvas = document.getElementById("gsplat-canvas") as HTMLCanvasElement;
 const progressContainer = document.getElementById("progress-container") as HTMLDivElement;
@@ -33,7 +34,12 @@ export async function gsplatScene(resolveGCamera: (value: SPLAT.Camera) => void)
 
     const resizeObserver = new ResizeObserver(entries => {
         entries.forEach(entry => {
-            renderer.setSize(entry.contentRect.width, entry.contentRect.width * 9 / 16);
+            let width = entry.contentRect.width;
+            let height = width * 9 / 16;
+            renderer.setSize(width, height);
+            CanvasSizeStateDistributor.dispatch({
+                width, height
+            });
         });
     });
     resizeObserver.observe(document.getElementById("play-area")!);
