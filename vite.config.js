@@ -8,7 +8,8 @@ export default defineConfig({
                 "./index.html",
                 "./scene-show.html",
                 "./convert-ply.html"
-            ]
+            ],
+            formats: ["es"]
         }
     }
 })
