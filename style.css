@@ -11,22 +11,22 @@ html {
     font-family: Montserrat, Arial, sans-serif;
 }
 
-body {
-    margin: 0 var(--main-radius);
+header h1 {
+    margin-bottom: 0;
 }
 
-header a {
-    color: inherit;
-    text-decoration: none !important;
+header nav {
+    display: flex;
+    justify-content: space-between;
 }
 
-#breadcrumbs {
+.breadcrumbs {
     line-height: 1em;
     height: 1em;
 }
 
 #current-scene:empty {
-    width: 100px;
+    width: 123px;
     background: #eaeaea;
     height: 0.8em;
     border-radius: 0.5em;
@@ -38,6 +38,9 @@ header a {
     display: flex;
     flex-direction: column;
     height: 100%;
+
+    margin: 0 auto;
+    max-width: 75vw;
 }
 
 main {
@@ -48,13 +51,10 @@ main {
     transition: all 0.2s ease;
 }
 
-main > * {
-    /*border-radius: var(--main-radius);*/
-}
-
 .displayNone {
     display: none;
 }
+
 #play-area {
     flex: 2;
     position: relative;
@@ -89,6 +89,44 @@ canvas {
 
 footer {
     line-height: calc(2 * var(--main-radius));
+}
+
+ul.breadcrumbs {
+    display: inline;
+    padding: 0;
+
+    li {
+        list-style: none;
+        display: inline;
+        padding-right: 1em;
+
+        &::after {
+            color: #9f9f9f;
+            padding-left: 1em;
+        }
+
+        &:last-child {
+            padding-right: 0;
+
+            &::after {
+                content: "";
+                padding-left: 0;
+            }
+        }
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none !important;
+    }
+}
+
+header ul.breadcrumbs li::after {
+    content: "/";
+}
+
+footer ul.breadcrumbs li::after {
+    content: "|";
 }
 
 #progress-container {

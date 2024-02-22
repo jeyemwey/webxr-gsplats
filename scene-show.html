@@ -10,8 +10,16 @@
 <body>
     <div id="container">
         <header>
-            <h1>Gaussian Splat Annotations and Viewer <a href="?debug=true" title="Toggle Debug Mode" id="toggle-debug-link">🤖</a></h1>
-            <p id="breadcrumbs"><a href="./">&larr; Overview</a> / <span id="current-scene"></span></p>
+            <h1>Gaussian Splat Annotations and Viewer</h1>
+            <nav>
+                <ul class="breadcrumbs">
+                    <li class="previous"><a href="./">&larr; Overview</a></li>
+                    <li id="current-scene"></li>
+                </ul>
+                <ul class="breadcrumbs">
+                    <li><a href="?debug=true" title="Toggle Debug Mode" id="toggle-debug-link">Toggle Debug Mode</a></li>
+                </ul>
+            </nav>
         </header>
 
         <main id="main-node">
@@ -29,10 +37,8 @@
         </main>
 
         <pre class="displayNone" id="debug-information">Gsplat Position: x=<span id="debug-pos-x">0</span> y=<span id="debug-pos-y">0</span> z=<span id="debug-pos-z">0</span></pre>
-        <button onclick="window.setActiveAnnotationId(1)">Set Annotations = 1</button>
+        <button class="displayNone" onclick="window.setActiveAnnotationId(1)">Set Annotations = 1</button>
 
-        <footer>Developed at TH K&ouml;ln</footer>
-    </div>
-    <script type="module" src="/src/page-show-scene.ts"></script>
-</body>
-</html>
+
+        <script type="module" src="/src/page-show-scene.ts"></script>
+{{> footer }}

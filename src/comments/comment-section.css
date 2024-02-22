@@ -1,10 +1,6 @@
 aside#comment-section {
-    /*font-size: 0.8em;*/
-
     display: flex;
     flex-direction: column;
-
-    margin-left: var(--main-radius);
 
     form, section {
         background: white;

@@ -23,6 +23,7 @@
     "gsplat": "^1.0.0",
     "preact": "^10.19.3",
     "three": "^0.159.0",
+    "vite-plugin-handlebars": "^2.0.0",
     "yuka": "^0.7.8"
   }
 }

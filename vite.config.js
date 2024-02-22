@@ -1,4 +1,6 @@
 import {defineConfig} from 'vite';
+import {resolve} from "path";
+import handlebars from "vite-plugin-handlebars";
 
 /** @type {import('vite').UserConfig} */
 export default defineConfig({
@@ -11,5 +13,6 @@ export default defineConfig({
             ],
             formats: ["es"]
         }
-    }
+    },
+    plugins: [handlebars({partialDirectory: resolve(__dirname, "partials")})]
 })

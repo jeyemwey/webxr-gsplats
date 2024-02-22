@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>WebXR &times; GSplat.JS</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="convert-ply.css">
 </head>
 <body>
 <div id="container">
@@ -13,23 +14,24 @@
     </header>
 
     <main id="main-node">
-
-        <form id="form">
-            <input type="checkbox" id="isPolycam"/> <label for="isPolycam">Is Polycam?</label><br/>
-            <input type="file" name="file" id="file"/>
-        </form>
-
-        <p>Log:</p>
-        <ul id="log">
-            <li>Website loaded</li>
-        </ul>
+        <fieldset id="form-wrapper">
+            <legend>Upload Form</legend>
+            <p>You can use this form to convert <code>.ply</code> files to <code>.splat</code> files which are necessary
+                to render in this website.</p>
+            <form id="form">
+                <p><input type="checkbox" id="isPolycam"/> <label for="isPolycam">Is the <code>.ply</code> file from
+                    Polycam?</label></p>
+                <p><input type="file" name="file" id="file"/></p>
+            </form>
+        </fieldset>
+        <fieldset>
+            <legend>Log</legend>
+            <ul id="log">
+                <li>Website loaded</li>
+            </ul>
+        </fieldset>
 
     </main>
 
-    <pre class="displayNone" id="debug-information"></pre>
-
-    <footer>Developed at TH K&ouml;ln. <a href="convert-ply.html">PLY to Splat-Converter</a></footer>
-</div>
-<script type="module" src="/src/page-convert-ply.ts"></script>
-</body>
-</html>
+    <script type="module" src="/src/page-convert-ply.ts"></script>
+    {{> footer }}
