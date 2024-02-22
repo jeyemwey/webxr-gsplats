@@ -1,6 +1,6 @@
 import {render} from "preact";
 import {FC} from "react";
-import {annotationStorage, scenes} from "./comments/annotations-storage.ts";
+import {annotationStorage, scenes} from "../../comments/annotations-storage.ts";
 
 const Overview: FC = () => {
     const openPage = (slug: string) => () => {

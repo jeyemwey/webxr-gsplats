@@ -14,5 +14,9 @@ export default defineConfig({
             formats: ["es"]
         }
     },
-    plugins: [handlebars({partialDirectory: resolve(__dirname, "partials")})]
+    plugins: [
+        handlebars({
+            partialDirectory: resolve(__dirname, "partials")
+        })
+    ]
 })

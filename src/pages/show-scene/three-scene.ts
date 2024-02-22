@@ -2,10 +2,13 @@ import * as THREE from "three";
 import * as YUKA from "yuka";
 import {isInDebug} from "./debugMode.ts";
 
+import * as RequestAnimationFrameDispatcher
+    from "../../util/animationFrameController/RequestAnimationFrameDispatcher.ts";
 import CameraOrientationStateDistributor
-    from "./util/CameraOrientationStateDistributor/CameraOrientationStateDistributor.ts";
-import * as RequestAnimationFrameDispatcher from "./util/animationFrameController/RequestAnimationFrameDispatcher.ts";
-import CommentStateDistributor from "./util/CommentStateDistributor.ts";
+    from "../../util/stateDistributors/CameraOrientationStateDistributor/CameraOrientationStateDistributor.ts";
+import CanvasSizeStateDistributor from "../../util/stateDistributors/CanvasSizeStateDistributor.ts";
+import CommentStateDistributor from "../../util/stateDistributors/CommentStateDistributor.ts";
+import MousePositionStateDistributor from "../../util/stateDistributors/MousePositionStateDistributor.ts";
 
 // @ts-ignore
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
@@ -14,12 +17,10 @@ import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 // @ts-ignore
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
 
-import {allAnnotations, Annotation} from "./comments/annotations-storage.ts";
-import {assignThreeVector, getCameraFOV, vec3GsplatToThree} from "./util/vectorUtils.ts";
+import {allAnnotations, Annotation} from "../../comments/annotations-storage.ts";
+import {assignThreeVector, getCameraFOV, vec3GsplatToThree} from "../../util/vectorUtils.ts";
 import {Camera} from "gsplat";
-import {addHelpfulArrow} from "./GSplatPrograms/prepare-scene.ts";
-import MousePositionStateDistributor from "./util/MousePositionStateDistributor.ts";
-import CanvasSizeStateDistributor from "./util/CanvasSizeStateDistributor.ts";
+import {addHelpfulArrow} from "../../GSplatPrograms/prepare-scene.ts";
 
 export async function threeScene(gCameraFuture: Promise<Camera>) {
     const renderer = new THREE.WebGLRenderer({

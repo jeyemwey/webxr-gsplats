@@ -1,15 +1,16 @@
 import * as SPLAT from "gsplat";
-import * as RequestAnimationFrameDispatcher from "./util/animationFrameController/RequestAnimationFrameDispatcher.ts";
+import * as RequestAnimationFrameDispatcher
+    from "../../util/animationFrameController/RequestAnimationFrameDispatcher.ts";
 import CameraOrientationStateDistributor
-    from "./util/CameraOrientationStateDistributor/CameraOrientationStateDistributor.ts";
-import MousePositionStateDistributor from "./util/MousePositionStateDistributor.ts";
-import {AxisProgram} from "./GSplatPrograms/AxisProgram.ts";
-import {GridProgram} from "./GSplatPrograms/GridProgram.ts";
+    from "../../util/stateDistributors/CameraOrientationStateDistributor/CameraOrientationStateDistributor.ts";
+import CanvasSizeStateDistributor from "../../util/stateDistributors/CanvasSizeStateDistributor.ts";
+import MousePositionStateDistributor from "../../util/stateDistributors/MousePositionStateDistributor.ts";
+import {AxisProgram} from "../../GSplatPrograms/AxisProgram.ts";
+import {GridProgram} from "../../GSplatPrograms/GridProgram.ts";
 import {isInDebug} from "./debugMode.ts";
 import {enableRaycastListener} from "./raycastController.ts";
-import {currentScene} from "./util/currentScene.ts";
-import {scenePreparations} from "./GSplatPrograms/prepare-scene.ts";
-import CanvasSizeStateDistributor from "./util/CanvasSizeStateDistributor.ts";
+import {currentScene} from "../../util/currentScene.ts";
+import {scenePreparations} from "../../GSplatPrograms/prepare-scene.ts";
 
 const canvas = document.getElementById("gsplat-canvas") as HTMLCanvasElement;
 const progressContainer = document.getElementById("progress-container") as HTMLDivElement;

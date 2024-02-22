@@ -1,6 +1,6 @@
 import {Camera} from "gsplat";
-import CommentStateDistributor from "./util/CommentStateDistributor.ts";
-import {allAnnotations, Annotation} from "./comments/annotations-storage.ts";
+import CommentStateDistributor from "../../util/stateDistributors/CommentStateDistributor.ts";
+import {allAnnotations, Annotation} from "../../comments/annotations-storage.ts";
 
 const EVENT_TYPE = "dblclick";
 
