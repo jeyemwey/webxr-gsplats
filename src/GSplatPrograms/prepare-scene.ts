@@ -8,7 +8,8 @@ const DEG2RAD = Math.PI / 180;
 
 type SceneTranslation = (scene: SPLAT.Scene) => void;
 
-const nop = (_scene: SPLAT.Scene): void => { /* NOP */ };
+const nop = (_scene: SPLAT.Scene): void => { /* NOP */
+};
 
 /**
  * We observe that scenes may not be presented correctly initially. To prevent
@@ -17,18 +18,30 @@ const nop = (_scene: SPLAT.Scene): void => { /* NOP */ };
  */
 export const scenePreparations: { [K in AvailableScenes]: SceneTranslation; } = {
     bonsai: nop,
-    teekueche: (scene: SPLAT.Scene): void => {
-        scene.objects[0].scale = new Vector3(7,7,7);
-        scene.objects[0].rotation= Quaternion.FromAxisAngle(new Vector3(1,0,0), DEG2RAD* 87);
+    teekuecheAntimatter15: (scene: SPLAT.Scene): void => {
+        scene.objects[0].scale = new Vector3(7, 7, 7);
+        scene.objects[0].rotation = Quaternion.FromAxisAngle(new Vector3(1, 0, 0), DEG2RAD * 87);
         scene.objects[0].applyRotation();
-        scene.objects[0].rotation = Quaternion.FromAxisAngle(new Vector3(0,0,1), DEG2RAD*-10);
+        scene.objects[0].rotation = Quaternion.FromAxisAngle(new Vector3(0, 0, 1), DEG2RAD * -10);
     },
-    wohnzimmer: (scene: SPLAT.Scene): void => {
-        scene.objects[0].rotation= Quaternion.FromAxisAngle(new Vector3(1,0,0), DEG2RAD* 87);        scene.objects[0].applyRotation();
+    teekuechePolycam: (scene: SPLAT.Scene) => {
+        scene.objects[0].scale = new Vector3(7, 7, 7);
+        scene.objects[0].rotation = Quaternion.FromAxisAngle(new Vector3(0, 0, 1), DEG2RAD * -11.5);
         scene.objects[0].applyRotation();
-        scene.objects[0].rotation = Quaternion.FromAxisAngle(new Vector3(0,0,1), DEG2RAD*10);
+        scene.objects[0].rotation = Quaternion.FromAxisAngle(new Vector3(1, 0, 0), DEG2RAD * -3);
+
+    },
+    wohnzimmerAntimatter15: (scene: SPLAT.Scene): void => {
+        scene.objects[0].rotation = Quaternion.FromAxisAngle(new Vector3(1, 0, 0), DEG2RAD * 87);
         scene.objects[0].applyRotation();
-        scene.objects[0].rotation = Quaternion.FromAxisAngle(new Vector3(0,1,0), DEG2RAD*70);
+        scene.objects[0].rotation = Quaternion.FromAxisAngle(new Vector3(0, 0, 1), DEG2RAD * 10);
+        scene.objects[0].applyRotation();
+        scene.objects[0].rotation = Quaternion.FromAxisAngle(new Vector3(0, 1, 0), DEG2RAD * 70);
+    },
+    wohnzimmerPolycam: (scene: SPLAT.Scene): void => {
+        scene.objects[0].rotation = Quaternion.FromAxisAngle(new Vector3( 0, 0,1), DEG2RAD * 10);
+        scene.objects[0].applyRotation();
+        scene.objects[0].rotation = Quaternion.FromAxisAngle(new Vector3(0, 1, 0), DEG2RAD * 70);
     },
     garden: (scene: SPLAT.Scene): void => {
         scene.objects[0].rotation = Quaternion.FromAxisAngle(new Vector3(1, 0, 0), DEG2RAD * -30);
