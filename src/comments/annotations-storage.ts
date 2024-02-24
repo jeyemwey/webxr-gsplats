@@ -26,40 +26,15 @@ export type Comment = {
     created_at: Date;
 };
 
-type SceneWithName = {
-    slug: AvailableScenes;
-    name: string;
-}
 
-export const scenes: { [K in AvailableScenes]: SceneWithName; } = {
-    "bonsai": {
-        slug: "bonsai",
-        name: "Bonsai Room",
-    },
-    "garden": {
-        slug: "garden",
-        name: "Gartentisch",
-    },
-    "bicycle": {
-        slug: "bicycle",
-        name: "Fahrrad",
-    },
-    "teekuecheAntimatter15": {
-        slug: "teekuecheAntimatter15",
-        name: "Teeküche (converted with Antimatter 15)"
-    },
-    "teekuechePolycam": {
-        slug: "teekuechePolycam",
-        name: "Teeküche (converted with Polycam)"
-    },
-    "wohnzimmerAntimatter15": {
-        slug: "wohnzimmerAntimatter15",
-        name: "Wohnzimmer (converted with Antimatter 15)"
-    },
-    "wohnzimmerPolycam": {
-        slug: "wohnzimmerPolycam",
-        name: "Wohnzimmer (converted with Polycam)"
-    }
+export const sceneNames: { [K in AvailableScenes]: string; } = {
+    "bonsai": "Bonsai Room",
+    "garden": "Gartentisch",
+    "bicycle": "Fahrrad",
+    "teekuecheAntimatter15":"Teeküche (converted with Antimatter 15)",
+    "teekuechePolycam": "Teeküche (converted with Polycam)",
+    "wohnzimmerAntimatter15": "Wohnzimmer (converted with Antimatter 15)",
+    "wohnzimmerPolycam": "Wohnzimmer (converted with Polycam)"
 };
 
 export const annotationStorage: { [K in AvailableScenes]: Annotation[]; } = {
