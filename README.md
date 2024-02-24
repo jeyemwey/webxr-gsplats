@@ -1,24 +1,16 @@
-# WebXR and GSplat.JS
+# Gaussian Splat Annotations and Viewer
 
-This repo contains the working changes for the WebXR project.
+This repository contains the working changes for the `Gaussian Splat Annotations and Viewer` that was a Master Project in Media Technology M.Sc. in Winter Term 2023/2024 at TH Köln.
 
-[🚀 Live version of current main branch 🚀](https://jeyemwey.github.io/webxr-gsplats/)
+There is a working [🚀 live version of current main branch 🚀](https://jeyemwey.github.io/webxr-gsplats/) which is deployed to GitHub Pages.
 
-You need [NodeJS](https://nodejs.org/en) and an HTTPS forwarder like [ngrok](https://ngrok.com/docs/getting-started/) on your computer to work with this project.
+## Run locally
 
-Next, we need to link the [Gsplat.JS](https://github.com/dylanebert/gsplat.js/) library. For that, download/clone the repository somewhere:
+To run the application yourself, you need [NodeJS](https://nodejs.org/en) on your Computer and available in your `PATH` environment.
+In the root folder (the one with this Readme), run `npm install` to get the dependencies that were defined in `package.json`. This will also install the `devDependencies` which are needed to compile the project. 
 
-```shell
-git clone https://github.com/dylanebert/gsplat.js
-cd gsplat.js
-npm link
-npm run build
-
-# And in this project
-npm link gsplat
-```
-
-Download the splat models to the respective folders in `public/scenes` and rename them to `scene.splat` each, so you don't need to get them from the internet every time:
+Now, you can download the splat files which contain the scene data.
+Download the splat models to the respective folders in `public/scenes` and rename them to `scene.splat` each:
 
 * https://photos.volkland.de/gsplats/bonsai-7k-raw.splat
 * https://photos.volkland.de/gsplats/bicycle-7k.splat
@@ -28,7 +20,7 @@ Download the splat models to the respective folders in `public/scenes` and renam
 * https://photos.volkland.de/gsplats/wohnzimmerAntimatter15-converted.splat
 * https://photos.volkland.de/gsplats/wohnzimmerPolycam-converted.splat
 
-Or using Curl in a Terminal:
+You can also use the following [curl](https://curl.se) commands in a terminal:
 
 ```shell
 curl -o public/scenes/bicycle/scene.splat "https://photos.volkland.de/gsplats/bicycle-7k.splat"
@@ -41,26 +33,41 @@ curl -o public/scenes/wohnzimmerAntimatter15/scene.splat "https://photos.volklan
 curl -o public/scenes/wohnzimmerPolycam/scene.splat "https://photos.volkland.de/gsplats/wohnzimmerPolycam-converted.splat"
 ```
 
-With everything installed, run:
+With limited space or bandwidth, you can also just download a subset of the scenes and expect a broken page when opening the other scenes. 
+
+Now that everything is ready, you can run a webserver and open the provided link. It will respond to code changes by reloading (parts of) the page:
 
 ```shell
-# Fetch dependencies
-npm install
-
-# Start project
 npm run dev
-
-# in a separate console
-ngrok http 5173
 ```
 
-ngrok will provide you with a link (something like `https://abc-bla-bla.ngrok.io`) which you can open on your XR capable device.
+You can also create a static build of the application to include in your website. The build will use a base url from which it will derive all subpaths, so you probably want to change it in `vite.config.js`. To create a static build, run `npm run build` and copy the files in the `dist` folder to their place on the web server.
 
-If you have an Android and use Chrome both on the phone and on the desktop, you connect Chrome DevTools to the phone.
-This is especially helpful to read console logs and work with traces and debugging symbols.
-You need to connect the phone to the computer via USB debugging for this.
-There's more information in the [Chrome Developers Documentation](https://developer.chrome.com/docs/devtools/remote-debugging/).
+## Adding a new scene
 
+1. Think of a slug for your scene. It will be visible to viewers of the webpage in the URL and can not contain spaces. 
+2. Extend `src/comments/annotations-storage.ts`:
+   1. `type AvailableScenes` with the new slug.
+   2. Set a human-readable name in `const sceneNames`.
+   3. Define the annotations to the scenes in `const annotationStorage`. This can also be an empty array, but it can not be undefined.
+3. Add the `.splat` file of your scene to `public/scenes/$slug/scene.splat`.
+   * If you only have a ply file, you can use the converter that is linked in the footer navigation of the webpage.
+   * `.splat` files are ignored by git since they are too large and in a binary format. Save the file on some web space and update the readme section and your deployment script (i.e. `.github/workflows/vite-deploy.yml`).
+4. Add a screenshot of your scene to `public/scenes/$slug/cover.png`. It should have sufficient resolution to look good in the catalogue view.
+3. Extend `src/GSplatPrograms/prepare-scene.ts`:
+   1. Define scene modifications in `const scenePreparations`. This can be empty in the beginning or a reference to `nop`.
+   2. If you want to, you can add a helpful arrow (i.e. to define a rotation axis) to the scene. Use the function `helpfulArrow` for this and fill it with your own data.
+
+After extending the `type` definition, the application will not build until you extend the rest of the items. This is expected and here to help you.
+
+## Debug Mode
+
+There is a debug mode which you can activate in the Scene-Detail-Page by clicking the link on the top right of the canvas. It comes with the following features:
+
+* The current Camera Position in gsplat.js and three.js world coordinate spaces are noted in the bottom of the page.
+* A grid along the "floor" of both renderers is inserted. The `gsplat` renderer creates a red grid, the `three.js` renderer creates a green grid. The green grid is moved a little bit down so its easier to see both grids.
+* The primary axes (1 in each direction) are rendered. These can be a little hidden, its recommended to uncomment the grid calls when you need the axis information.
+* A sunflower is added to the three.js scene to have a more interesting, visual object in the scene. The sunflower will "look" at positive X in gsplat.js coordinates, so negative X in three.js coordinates.
 
 ---
 Masterprojekt im Studiengang Medientechnologie M.Sc. an der TH K&ouml;ln. Contact: <jvolklan@th-koeln.de>.
