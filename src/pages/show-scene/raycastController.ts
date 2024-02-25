@@ -8,6 +8,12 @@ var raycastActive = false;
 
 export const enableRaycastListener = (canvas: HTMLCanvasElement, camera: Camera) => {
     canvas.addEventListener(EVENT_TYPE, function (event) {
+        const title = prompt("Title of the annotation?", 'New Annotation');
+        if (!title) {
+            console.log("New annotation aborted by user.")
+            return;
+        }
+
         if (raycastActive) {
             return;
         }
@@ -30,7 +36,7 @@ export const enableRaycastListener = (canvas: HTMLCanvasElement, camera: Camera)
             position: rayTarget,
             id: allAnnotations.length + 1,
             created_at: new Date(),
-            title: "New Annotation"
+            title
         };
 
         allAnnotations.push(ann);
