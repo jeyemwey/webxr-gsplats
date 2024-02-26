@@ -9,7 +9,7 @@ type Props = {
 export const NewCommentForm = (props: Props) => {
     const [text, setText] = useState<string>("");
 
-    const pushMessage = () => {
+    const pushMessage = (e: SubmitEvent) => {
         const comment: Comment = {
             id: Math.floor((Math.random()*200000)),
             text: text,
@@ -18,6 +18,8 @@ export const NewCommentForm = (props: Props) => {
         };
         props.addCommentToAnnotation(comment);
         setText("");
+
+        e.preventDefault();
     };
 
     return <form onSubmit={pushMessage}>
