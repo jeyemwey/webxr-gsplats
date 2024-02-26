@@ -4,7 +4,7 @@ body,
 html {
     --main-radius: 2rem;
 
-    height: 100%;
+    height: auto;
     margin: 0;
     padding: 0;
     background-color: #dcdcdc;
@@ -37,10 +37,10 @@ header nav {
 #container {
     display: flex;
     flex-direction: column;
-    height: 100%;
 
-    margin: 0 auto;
-    max-width: 75vw;
+    height: auto;
+    max-width: 100%;
+    margin: 2em 2em 0;
 }
 
 main {
@@ -174,7 +174,7 @@ progress::-moz-progress-bar {
 }
 
 main.has-open-comment-section .tooltip {
-    font-size: 0.7em;
+    font-size: 0.9em;
     padding: 0.35rem 0.7rem;
 }
 
