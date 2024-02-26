@@ -7,7 +7,7 @@ import * as RequestAnimationFrameDispatcher
 import CameraOrientationStateDistributor
     from "../../util/stateDistributors/CameraOrientationStateDistributor/CameraOrientationStateDistributor.ts";
 import CanvasSizeStateDistributor from "../../util/stateDistributors/CanvasSizeStateDistributor.ts";
-import CommentStateDistributor from "../../util/stateDistributors/CommentStateDistributor.ts";
+import AnnotationsStateDistributor from "../../util/stateDistributors/AnnotationsStateDistributor.ts";
 import MousePositionStateDistributor from "../../util/stateDistributors/MousePositionStateDistributor.ts";
 
 // @ts-ignore
@@ -140,7 +140,7 @@ export async function threeScene(gCameraFuture: Promise<Camera>) {
     addAnnotationsToCanvas(allAnnotations);
     addHelpfulArrow(scene);
 
-    CommentStateDistributor.addEventListener(() => {
+    AnnotationsStateDistributor.addEventListener(() => {
         group.clear();
         addAnnotationsToCanvas(allAnnotations);
     });

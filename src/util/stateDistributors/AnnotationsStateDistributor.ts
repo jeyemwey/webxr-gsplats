@@ -1,6 +1,6 @@
 import AbstractStateDistributor from "./AbstractStateDistributor.ts";
 
-const instance = new class CommentStateDistributor extends AbstractStateDistributor<void> {
+const instance = new class AnnotationsStateDistributor extends AbstractStateDistributor<void> {
 }();
 
 export default instance;

@@ -1,5 +1,5 @@
 import {Camera} from "gsplat";
-import CommentStateDistributor from "../../util/stateDistributors/CommentStateDistributor.ts";
+import AnnotationsStateDistributor from "../../util/stateDistributors/AnnotationsStateDistributor.ts";
 import {allAnnotations, Annotation} from "../../comments/annotations-storage.ts";
 
 const EVENT_TYPE = "dblclick";
@@ -40,6 +40,6 @@ export const enableRaycastListener = (canvas: HTMLCanvasElement, camera: Camera)
         };
 
         allAnnotations.push(ann);
-        CommentStateDistributor.dispatch();
+        AnnotationsStateDistributor.dispatch();
     });
 }
