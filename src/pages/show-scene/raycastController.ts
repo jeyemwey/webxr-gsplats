@@ -6,7 +6,7 @@ const EVENT_TYPE = "dblclick";
 
 var raycastActive = false;
 
-export const enableRaycastListener = (canvas: HTMLCanvasElement, camera: Camera) => {
+export const setupNewAnnotationRaycaster = (canvas: HTMLCanvasElement, camera: Camera) => {
     canvas.addEventListener(EVENT_TYPE, function (event) {
         const title = prompt("Title of the annotation?", 'New Annotation');
         if (!title) {
@@ -28,6 +28,7 @@ export const enableRaycastListener = (canvas: HTMLCanvasElement, camera: Camera)
         const x = (mouseX / canvas.width) * 2 - 1;
         const y = -(mouseY / canvas.height) * 2 + 1;
 
+        // TODO: Fix Raycast since screenPointToRay will always produce a normed vector (would be shorter if not normed)
         const rayTarget = camera.screenPointToRay(x, y);
         console.log(rayTarget);
 

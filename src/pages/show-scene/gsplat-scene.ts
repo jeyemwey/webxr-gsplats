@@ -8,7 +8,7 @@ import MousePositionStateDistributor from "../../util/stateDistributors/MousePos
 import {AxisProgram} from "../../GSplatPrograms/AxisProgram.ts";
 import {GridProgram} from "../../GSplatPrograms/GridProgram.ts";
 import {isInDebug} from "./debugMode.ts";
-import {enableRaycastListener} from "./raycastController.ts";
+import {setupNewAnnotationRaycaster} from "./raycastController.ts";
 import {currentScene} from "../../util/currentScene.ts";
 import {scenePreparations} from "../../GSplatPrograms/prepare-scene.ts";
 
@@ -16,23 +16,53 @@ const canvas = document.getElementById("gsplat-canvas") as HTMLCanvasElement;
 const progressContainer = document.getElementById("progress-container") as HTMLDivElement;
 const progressIndicator = document.getElementById("progress-indicator") as HTMLProgressElement;
 
-export async function gsplatScene(resolveGCamera: (value: SPLAT.Camera) => void) {
+export async function gsplatScene(resolveGCameraFuture: (value: SPLAT.Camera) => void) {
     const renderer = new SPLAT.WebGLRenderer(canvas, []);
 
-    if (isInDebug) {
-        renderer.addProgram(new AxisProgram(renderer, []));
-        renderer.addProgram(new GridProgram(renderer, []));
-    }
+    setupDebugSignals(renderer);
 
     const camera = new SPLAT.Camera();
     const controls = new SPLAT.OrbitControls(camera, canvas);
 
-    // @ts-ignore
+    setupResizeObserver(renderer);
+    resolveGCameraFuture(camera);
+    dispatchCameraOrientationState(camera);
+
+    setupMouseMovementDispatcher();
+    setupNewAnnotationRaycaster(canvas, camera);
+
     const scene = await loadScene(`./scenes/${currentScene}/scene.splat`);
+
+    RequestAnimationFrameDispatcher.add(() => {
+        controls.update();
+        dispatchCameraOrientationState(camera);
+
+        renderer.render(scene, camera);
+    });
+}
+
+async function loadScene(url: string): Promise<SPLAT.Scene> {
+    const scene = new SPLAT.Scene();
+    await SPLAT.Loader.LoadAsync(
+        url,
+        scene,
+        (progress) => (progressIndicator.value = progress * 100),
+        false);
+
     scenePreparations[currentScene](scene);
 
     progressContainer.className = "displayNone";
+    return scene;
+}
 
+function setupDebugSignals(renderer: SPLAT.WebGLRenderer) {
+    if (isInDebug) {
+        renderer.addProgram(new AxisProgram(renderer, []));
+        renderer.addProgram(new GridProgram(renderer, []));
+    }
+}
+
+function setupResizeObserver(renderer: SPLAT.WebGLRenderer) {
     const resizeObserver = new ResizeObserver(entries => {
         entries.forEach(entry => {
             let width = entry.contentRect.width;
@@ -50,27 +80,16 @@ export async function gsplatScene(resolveGCamera: (value: SPLAT.Camera) => void)
     };
     handleResize();
     window.addEventListener("resize", handleResize);
-    resolveGCamera(camera);
+}
 
-    function dispatchCameraOrientationState() {
-        CameraOrientationStateDistributor.dispatch({
-            position: camera.position,
-            rotationQuaternion: camera.rotation,
-
-        });
-    }
-
-    dispatchCameraOrientationState();
-
-    RequestAnimationFrameDispatcher.add(() => {
-        controls.update();
-        dispatchCameraOrientationState();
-
-        renderer.render(scene, camera);
+function dispatchCameraOrientationState(camera: SPLAT.Camera) {
+    CameraOrientationStateDistributor.dispatch({
+        position: camera.position,
+        rotationQuaternion: camera.rotation,
     });
+}
 
-    enableRaycastListener(canvas, camera);
-
+function setupMouseMovementDispatcher() {
     canvas.addEventListener("mousemove", function (event) {
         var rect = canvas.getBoundingClientRect();
         var mouseX = event.clientX - rect.left;
@@ -82,15 +101,4 @@ export async function gsplatScene(resolveGCamera: (value: SPLAT.Camera) => void)
 
         MousePositionStateDistributor.dispatch({x, y});
     });
-}
-
-async function loadScene(url: string): Promise<SPLAT.Scene> {
-    const scene = new SPLAT.Scene();
-    await SPLAT.Loader.LoadAsync(
-        url,
-        scene,
-        (progress) => (progressIndicator.value = progress * 100),
-        false);
-
-    return scene;
 }
