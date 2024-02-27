@@ -69,5 +69,9 @@ There is a debug mode which you can activate in the Scene-Detail-Page by clickin
 * The primary axes (1 in each direction) are rendered. These can be a little hidden, its recommended to uncomment the grid calls when you need the axis information.
 * A sunflower is added to the three.js scene to have a more interesting, visual object in the scene. The sunflower will "look" at positive X in gsplat.js coordinates, so negative X in three.js coordinates.
 
+## Attributions
+
+* Sunflower Polygon: "[Sunflower](https://poly.google.com/view/ce4GXw3VYE5)" by Poly by Google, licensed under [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/legalcode).
+
 ---
 Masterprojekt im Studiengang Medientechnologie M.Sc. an der TH K&ouml;ln. Contact: <jvolklan@th-koeln.de>.
