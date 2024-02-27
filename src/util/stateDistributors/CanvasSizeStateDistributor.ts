@@ -1,6 +1,6 @@
 import AbstractStateDistributor from "./AbstractStateDistributor.ts";
 
-type CanvasSize = { width: number, height: number };
+export type CanvasSize = { width: number, height: number, fov: number };
 
 const instance = new class CanvasSizeStateDistributor extends AbstractStateDistributor<CanvasSize> {
 }();

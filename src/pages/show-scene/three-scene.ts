@@ -6,7 +6,7 @@ import * as RequestAnimationFrameDispatcher
     from "../../util/animationFrameController/RequestAnimationFrameDispatcher.ts";
 import CameraOrientationStateDistributor
     from "../../util/stateDistributors/CameraOrientationStateDistributor/CameraOrientationStateDistributor.ts";
-import CanvasSizeStateDistributor from "../../util/stateDistributors/CanvasSizeStateDistributor.ts";
+import CanvasSizeStateDistributor, {CanvasSize} from "../../util/stateDistributors/CanvasSizeStateDistributor.ts";
 import AnnotationsStateDistributor from "../../util/stateDistributors/AnnotationsStateDistributor.ts";
 import MousePositionStateDistributor from "../../util/stateDistributors/MousePositionStateDistributor.ts";
 
@@ -18,11 +18,10 @@ import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
 
 import {allAnnotations, Annotation, Id} from "../../comments/annotations-storage.ts";
-import {assignThreeVector, getCameraFOV, vec3GsplatToThree} from "../../util/vectorUtils.ts";
-import {Camera} from "gsplat";
+import {assignThreeVector, vec3GsplatToThree} from "../../util/vectorUtils.ts";
 import {addHelpfulArrow} from "../../GSplatPrograms/prepare-scene.ts";
 
-export async function threeScene(gCameraFuture: Promise<Camera>) {
+export async function threeScene(cameraStateFuture: Promise<CanvasSize>) {
     const renderer = new THREE.WebGLRenderer({
         alpha: true,
         antialias: true,
@@ -35,7 +34,7 @@ export async function threeScene(gCameraFuture: Promise<Camera>) {
     setupSceneLights(scene);
     setupDebugSignals(scene);
 
-    const camera = await setupCamera(gCameraFuture, canvas, scene);
+    const camera = await setupCamera(cameraStateFuture, scene);
     const labelRenderer = setupLabelRenderer(canvas);
     setupCanvasSizeUpdater(camera, renderer, labelRenderer);
 
@@ -85,16 +84,11 @@ function setupDebugSignals(scene: THREE.Scene) {
     }
 }
 
-async function setupCamera(gCameraFuture: Promise<Camera>, canvas: HTMLCanvasElement, scene: THREE.Scene) {
-    const gCamera = await gCameraFuture;
-    console.log(`awaited gcamera, got fov ${getCameraFOV(gCamera)}deg from it.`)
+async function setupCamera(cameraStateFuture: Promise<CanvasSize>, scene: THREE.Scene) {
+    const {width, height, fov} = await cameraStateFuture;
+    console.log(`awaited gcamera, got fov ${fov}deg from it.`)
 
-    const camera = new THREE.PerspectiveCamera(
-        getCameraFOV(gCamera),
-        canvas.clientWidth / canvas.clientHeight,
-        .1,
-        1000,
-    );
+    const camera = new THREE.PerspectiveCamera(fov, width / height, .1, 1000);
 
     camera.lookAt(scene.position);
     CameraOrientationStateDistributor.addEventListener((newState) => {
@@ -117,8 +111,9 @@ function setupLabelRenderer(canvas: HTMLCanvasElement) {
 }
 
 function setupCanvasSizeUpdater(camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer, labelRenderer: CSS2DRenderer) {
-    CanvasSizeStateDistributor.addEventListener(({width, height}) => {
+    CanvasSizeStateDistributor.addEventListener(({width, height, fov}) => {
         camera.aspect = width / height;
+        camera.fov = fov;
         camera.updateProjectionMatrix();
         renderer.setSize(width, height);
         labelRenderer.setSize(width, height);

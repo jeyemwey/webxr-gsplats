@@ -22,11 +22,7 @@ export const assignThreeVector = (base: TVector3, newValues: TVector3): void => 
  *
  * @see https://stackoverflow.com/a/46195462
  **/
-export const getCameraFOV = (_camera: GCamera): number =>{
-    // const camera_data = camera.data;
-    // const fov = 180 - (2* Math.atan((2 * camera_data.fy) / camera_data.height) * 180.0) / Math.PI;
-    // return fov;
-
-    // TODO: Replace with real FOV calculation. We had that working, but it is somehow weird now.
-    return 41.8;
+export const getCameraFOV = (camera: GCamera): number => {
+    const camera_data = camera.data;
+    return 180 - 2 * Math.atan((2 * camera_data.fy) / camera_data.height) * 180 / Math.PI;
 }

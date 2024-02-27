@@ -3,7 +3,7 @@ import * as RequestAnimationFrameDispatcher
     from "../../util/animationFrameController/RequestAnimationFrameDispatcher.ts";
 import CameraOrientationStateDistributor
     from "../../util/stateDistributors/CameraOrientationStateDistributor/CameraOrientationStateDistributor.ts";
-import CanvasSizeStateDistributor from "../../util/stateDistributors/CanvasSizeStateDistributor.ts";
+import CanvasSizeStateDistributor, {CanvasSize} from "../../util/stateDistributors/CanvasSizeStateDistributor.ts";
 import MousePositionStateDistributor from "../../util/stateDistributors/MousePositionStateDistributor.ts";
 import {AxisProgram} from "../../GSplatPrograms/AxisProgram.ts";
 import {GridProgram} from "../../GSplatPrograms/GridProgram.ts";
@@ -11,12 +11,13 @@ import {isInDebug} from "./debugMode.ts";
 import {setupNewAnnotationRaycaster} from "./raycastController.ts";
 import {currentScene} from "../../util/currentScene.ts";
 import {scenePreparations} from "../../GSplatPrograms/prepare-scene.ts";
+import {getCameraFOV} from "../../util/vectorUtils.ts";
 
 const canvas = document.getElementById("gsplat-canvas") as HTMLCanvasElement;
 const progressContainer = document.getElementById("progress-container") as HTMLDivElement;
 const progressIndicator = document.getElementById("progress-indicator") as HTMLProgressElement;
 
-export async function gsplatScene(resolveGCameraFuture: (value: SPLAT.Camera) => void) {
+export async function gsplatScene(canvasSizeFuture: (value: CanvasSize) => void) {
     const renderer = new SPLAT.WebGLRenderer(canvas, []);
 
     setupDebugSignals(renderer);
@@ -24,14 +25,13 @@ export async function gsplatScene(resolveGCameraFuture: (value: SPLAT.Camera) =>
     const camera = new SPLAT.Camera();
     const controls = new SPLAT.OrbitControls(camera, canvas);
 
-    setupResizeObserver(renderer);
-    resolveGCameraFuture(camera);
+    const scene = await loadScene(`./scenes/${currentScene}/scene.splat`);
+
+    setupResizeObserver(renderer, camera, canvasSizeFuture);
     dispatchCameraOrientationState(camera);
 
     setupMouseMovementDispatcher();
     setupNewAnnotationRaycaster(canvas, camera);
-
-    const scene = await loadScene(`./scenes/${currentScene}/scene.splat`);
 
     RequestAnimationFrameDispatcher.add(() => {
         controls.update();
@@ -62,24 +62,26 @@ function setupDebugSignals(renderer: SPLAT.WebGLRenderer) {
     }
 }
 
-function setupResizeObserver(renderer: SPLAT.WebGLRenderer) {
+function setupResizeObserver(renderer: SPLAT.WebGLRenderer, camera: SPLAT.Camera, canvasSizeFuture: (value: CanvasSize) => void) {
+    const dispatchParameters = (width: number): void => {
+        let height = width * 9 / 16;
+        renderer.setSize(width, height);
+
+        const newState: CanvasSize = {width, height, fov: getCameraFOV(camera)};
+        CanvasSizeStateDistributor.dispatch(newState);
+        canvasSizeFuture(newState);
+    }
+    setTimeout(() => {
+        console.log("dispatched");
+        dispatchParameters(canvas.clientWidth);
+    }, 1000);
+
     const resizeObserver = new ResizeObserver(entries => {
         entries.forEach(entry => {
-            let width = entry.contentRect.width;
-            let height = width * 9 / 16;
-            renderer.setSize(width, height);
-            CanvasSizeStateDistributor.dispatch({
-                width, height
-            });
+            dispatchParameters(entry.contentRect.width);
         });
     });
     resizeObserver.observe(document.getElementById("play-area")!);
-
-    const handleResize = () => {
-        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
 }
 
 function dispatchCameraOrientationState(camera: SPLAT.Camera) {

@@ -4,13 +4,13 @@ import {isInDebug} from "./debugMode.ts";
 import {initPositionDisplay} from "../../util/stateDistributors/CameraOrientationStateDistributor/positionDisplay.ts";
 import {initComments} from "../../comments/init.tsx";
 import {future} from "../../util/Future.ts";
+import {CanvasSize} from "../../util/stateDistributors/CanvasSizeStateDistributor.ts";
 
-import {Camera as GCamera} from "gsplat";
 
-const {resolve: resolveGCamera, future: gCameraFuture} = future<GCamera>();
+const {resolve: resolveCanvasSize, future: canvasSizeFuture} = future<CanvasSize>();
 
-gsplatScene(resolveGCamera)
-threeScene(gCameraFuture)
+gsplatScene(resolveCanvasSize)
+threeScene(canvasSizeFuture)
 initPositionDisplay()
 initComments(document.getElementById("comment-section")!)
 
