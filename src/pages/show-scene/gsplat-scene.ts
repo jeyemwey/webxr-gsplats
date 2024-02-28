@@ -31,7 +31,7 @@ export async function gsplatScene(canvasSizeFuture: (value: CanvasSize) => void)
     dispatchCameraOrientationState(camera);
 
     setupMouseMovementDispatcher();
-    setupNewAnnotationRaycaster(canvas, camera);
+    setupNewAnnotationRaycaster(renderer, canvas);
 
     RequestAnimationFrameDispatcher.add(() => {
         controls.update();
@@ -72,7 +72,6 @@ function setupResizeObserver(renderer: SPLAT.WebGLRenderer, camera: SPLAT.Camera
         canvasSizeFuture(newState);
     }
     setTimeout(() => {
-        console.log("dispatched");
         dispatchParameters(canvas.clientWidth);
     }, 1000);
 
