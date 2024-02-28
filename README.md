@@ -26,7 +26,6 @@ You can also use the following [curl](https://curl.se) commands in a terminal:
 curl -o public/scenes/bicycle/scene.splat "https://photos.volkland.de/gsplats/bicycle-7k.splat"
 curl -o public/scenes/bonsai/scene.splat "https://photos.volkland.de/gsplats/bonsai-7k-raw.splat"
 curl -o public/scenes/garden/scene.splat "https://photos.volkland.de/gsplats/garden-7k.splat"
-curl -o public/scenes/wohnzimmer/scene.splat "https://photos.volkland.de/gsplats/wohnzimmer-converted.splat"
 curl -o public/scenes/teekuecheAntimatter15/scene.splat "https://photos.volkland.de/gsplats/teekuecheAntimatter15-converted.splat"
 curl -o public/scenes/teekuechePolycam/scene.splat "https://photos.volkland.de/gsplats/teekuechePolycam-converted.splat"
 curl -o public/scenes/wohnzimmerAntimatter15/scene.splat "https://photos.volkland.de/gsplats/wohnzimmerAntimatter15-converted.splat"
