@@ -1,7 +1,9 @@
 import {Vector3, WebGLRenderer} from "gsplat";
-import {ExtendedIntersectionTester} from "./newAnnotationRaycaster/ExtendedIntersectionTester.ts";
-import AnnotationsStateDistributor from "../../util/stateDistributors/AnnotationsStateDistributor.ts";
-import {allAnnotations, Annotation} from "../../comments/annotations-storage.ts";
+import {ExtendedIntersectionTester} from "./ExtendedIntersectionTester.ts";
+import AnnotationsStateDistributor from "../../../util/stateDistributors/AnnotationsStateDistributor.ts";
+import {allAnnotations, Annotation} from "../../../comments/annotations-storage.ts";
+import {splatPositionModification} from "../../../GSplatPrograms/prepare-scene.ts";
+import {currentScene} from "../../../util/currentScene.ts";
 
 const EVENT_TYPE = "dblclick";
 
@@ -46,13 +48,15 @@ export const setupNewAnnotationRaycaster = (renderer: WebGLRenderer, canvas: HTM
 
         console.log(intersectedSplatIndex);
 
-        let intersectedSplatPosition = new Vector3(renderer.renderProgram.renderData?.positions[intersectedSplatIndex] || 0,
-            renderer.renderProgram.renderData?.positions[intersectedSplatIndex + 1] || 0,
-            renderer.renderProgram.renderData?.positions[intersectedSplatIndex + 2] || 0);
+        let intersectedSplatPosition = new Vector3(renderer.renderProgram.renderData?.positions[3 * intersectedSplatIndex] || 0,
+            renderer.renderProgram.renderData?.positions[3 * intersectedSplatIndex + 1] || 0,
+            renderer.renderProgram.renderData?.positions[3 * intersectedSplatIndex + 2] || 0);
+        let transformedSplatPos = splatPositionModification[currentScene](intersectedSplatPosition);
+        console.table({intersectedSplatPosition, transformedSplatPos});
 
         const ann: Annotation = {
             comments: [],
-            position: intersectedSplatPosition,
+            position: transformedSplatPos,
             id: allAnnotations.length + 1,
             created_at: new Date(),
             title

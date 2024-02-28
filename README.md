@@ -54,9 +54,10 @@ You can also create a static build of the application to include in your website
    * If you only have a ply file, you can use the converter that is linked in the footer navigation of the webpage.
    * `.splat` files are ignored by git since they are too large and in a binary format. Save the file on some web space and update the readme section and your deployment script (i.e. `.github/workflows/vite-deploy.yml`).
 4. Add a screenshot of your scene to `public/scenes/$slug/cover.png`. It should have sufficient resolution to look good in the catalogue view.
-3. Extend `src/GSplatPrograms/prepare-scene.ts`:
-   1. Define scene modifications in `const scenePreparations`. This can be empty in the beginning or a reference to `nop`.
-   2. If you want to, you can add a helpful arrow (i.e. to define a rotation axis) to the scene. Use the function `helpfulArrow` for this and fill it with your own data.
+5. Extend `src/GSplatPrograms/prepare-scene.ts`:
+   1. Define scene modifications in `const scenePreparations`. This can be empty in the beginning or a reference to `identity`.
+   2. Translate the scene modification to a positional modification in `const splatPositionModification`. This can be a reference to `identity`. This is important to translate the position of a splat to its world coordinates, i.e. when attaching an annotation to it. It is not necessary to scale the vector.
+   3. If you want to, you can add a helpful arrow (i.e. to define a rotation axis) to the scene. Use the function `helpfulArrow` for this and fill it with your own data.
 
 After extending the `type` definition, the application will not build until you extend the rest of the items. This is expected and here to help you.
 

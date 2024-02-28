@@ -8,7 +8,7 @@ import MousePositionStateDistributor from "../../util/stateDistributors/MousePos
 import {AxisProgram} from "../../GSplatPrograms/AxisProgram.ts";
 import {GridProgram} from "../../GSplatPrograms/GridProgram.ts";
 import {isInDebug} from "./debugMode.ts";
-import {setupNewAnnotationRaycaster} from "./raycastController.ts";
+import {setupNewAnnotationRaycaster} from "./newAnnotationRaycaster/raycastController.ts";
 import {currentScene} from "../../util/currentScene.ts";
 import {scenePreparations} from "../../GSplatPrograms/prepare-scene.ts";
 import {getCameraFOV} from "../../util/vectorUtils.ts";
