@@ -7,8 +7,6 @@ export type Id = number;
 export type AvailableScenes = "bonsai"
     | "garden"
     | "bicycle"
-    | "teekuecheAntimatter15"
-    | "teekuechePolycam"
     | "wohnzimmerAntimatter15"
     | "wohnzimmerPolycam";
 export type Annotation = {
@@ -31,8 +29,6 @@ export const sceneNames: { [K in AvailableScenes]: string; } = {
     "bonsai": "Bonsai Room",
     "garden": "Gartentisch",
     "bicycle": "Fahrrad",
-    "teekuecheAntimatter15": "Teeküche (converted with Antimatter 15)",
-    "teekuechePolycam": "Teeküche (converted with Polycam)",
     "wohnzimmerAntimatter15": "Wohnzimmer (converted with Antimatter 15)",
     "wohnzimmerPolycam": "Wohnzimmer (converted with Polycam)"
 };
@@ -40,8 +36,6 @@ export const sceneNames: { [K in AvailableScenes]: string; } = {
 export const annotationStorage: { [K in AvailableScenes]: Annotation[]; } = {
     "wohnzimmerAntimatter15": [],
     "wohnzimmerPolycam": [],
-    "teekuecheAntimatter15": [],
-    "teekuechePolycam": [],
     "garden": [
         {
             id: 1,

@@ -17,19 +17,6 @@ const identity = <T>(x: T) => /* NOP */ x;
  */
 export const scenePreparations: { [K in AvailableScenes]: SceneTranslation; } = {
     bonsai: identity,
-    teekuecheAntimatter15: (scene: SPLAT.Scene): void => {
-        scene.objects[0].scale = new Vector3(7, 7, 7);
-        scene.objects[0].rotation = Quaternion.FromAxisAngle(new Vector3(1, 0, 0), DEG2RAD * 87);
-        scene.objects[0].applyRotation();
-        scene.objects[0].rotation = Quaternion.FromAxisAngle(new Vector3(0, 0, 1), DEG2RAD * -10);
-    },
-    teekuechePolycam: (scene: SPLAT.Scene) => {
-        scene.objects[0].scale = new Vector3(7, 7, 7);
-        scene.objects[0].rotation = Quaternion.FromAxisAngle(new Vector3(0, 0, 1), DEG2RAD * -11.5);
-        scene.objects[0].applyRotation();
-        scene.objects[0].rotation = Quaternion.FromAxisAngle(new Vector3(1, 0, 0), DEG2RAD * -3);
-
-    },
     wohnzimmerAntimatter15: (scene: SPLAT.Scene): void => {
         scene.objects[0].rotation = Quaternion.FromAxisAngle(new Vector3(1, 0, 0), DEG2RAD * 87);
         scene.objects[0].applyRotation();
@@ -56,16 +43,6 @@ type PositionModification = (vec: Vector3) => Vector3;
 
 export const splatPositionModification: { [K in AvailableScenes]: PositionModification; } = {
     bonsai: identity,
-    teekuecheAntimatter15: (vec) => {
-        // Scene is very foggy, issues may arise
-        let tmp = Quaternion.FromAxisAngle(new Vector3(1, 0, 0), DEG2RAD * 87).apply(vec);
-        return Quaternion.FromAxisAngle(new Vector3(0, 0, 1), DEG2RAD * -10).apply(tmp);
-    },
-    teekuechePolycam: (vec) => {
-        // Scene is very foggy, issues may arise
-        let tmp = Quaternion.FromAxisAngle(new Vector3(0, 0, 1), DEG2RAD * -11.5).apply(vec);
-        return Quaternion.FromAxisAngle(new Vector3(1, 0, 0), DEG2RAD * -3).apply(tmp);
-    },
     wohnzimmerAntimatter15: (vec) => {
         let tmp = Quaternion.FromAxisAngle(new Vector3(1, 0, 0), DEG2RAD * 87).apply(vec);
         tmp = Quaternion.FromAxisAngle(new Vector3(0, 0, 1), DEG2RAD * 10).apply(tmp);
