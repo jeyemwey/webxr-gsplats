@@ -31,7 +31,7 @@ export const sceneNames: { [K in AvailableScenes]: string; } = {
     "bonsai": "Bonsai Room",
     "garden": "Gartentisch",
     "bicycle": "Fahrrad",
-    "teekuecheAntimatter15":"Teeküche (converted with Antimatter 15)",
+    "teekuecheAntimatter15": "Teeküche (converted with Antimatter 15)",
     "teekuechePolycam": "Teeküche (converted with Polycam)",
     "wohnzimmerAntimatter15": "Wohnzimmer (converted with Antimatter 15)",
     "wohnzimmerPolycam": "Wohnzimmer (converted with Polycam)"
@@ -71,14 +71,34 @@ export const annotationStorage: { [K in AvailableScenes]: Annotation[]; } = {
             title: "Reifenprofil",
             created_at: new Date(2024, 2, 6, 13, 22),
             position: new GVector3(-0.1, -0.1, 1.2),
-            comments: []
+            comments: [
+                {
+                    id: 1,
+                    author: getRandomAuthor(),
+                    text: "Dieses Reifenprofil wurde auf der Poststraße auch gefunden.",
+                    created_at: new Date(2024, 3, 23, 13, 56)
+                },
+                {
+                    id: 2,
+                    author: getRandomAuthor(),
+                    text: "Es scheint sich um Maxxis HookWorm-Reifen zu handeln!",
+                    created_at: new Date(2024, 3, 23, 16, 3)
+                },
+            ]
         },
         {
             id: 2,
             title: "Fahrradschloss",
             created_at: new Date(2024, 2, 2, 13, 22),
             position: new GVector3(0.15, -0.3, 0),
-            comments: []
+            comments: [
+                {
+                    id: 1,
+                    author:getRandomAuthor(),
+                    text: "Schüsselschloss aus dem Baumarkt, keine Aufbruchspuren sichtbar",
+                    created_at: new Date(2024,0,12,10,45)
+                }
+            ]
         },
         {
             id: 3,
